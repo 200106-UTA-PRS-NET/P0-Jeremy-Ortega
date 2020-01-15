@@ -169,11 +169,11 @@ namespace PizzaBox.Domain
         public double getPriceOfPizza()
         {
             double ToppingsPrice = 0.0;
-            double CrustMultiplier = 0.0;
+            double CrustMultiplier;
             double pizzaSizeCost = 0.0;
 
             // Chosen Size
-            PizzaSize size = this.pizzaSize;
+            PizzaSize size = pizzaSize;
             switch (size)
             {
                 case PizzaSize.twelveInch:
@@ -234,7 +234,7 @@ namespace PizzaBox.Domain
             }
 
             // return total cost of pizza
-            return pizzaSizeCost*CrustMultiplier + ToppingsPrice;
+            return pizzaSizeCost * CrustMultiplier + ToppingsPrice;
 
         }
 

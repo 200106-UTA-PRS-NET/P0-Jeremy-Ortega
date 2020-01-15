@@ -34,11 +34,11 @@ namespace PizzaBox.Client
             while (!(choice >=1 && choice <=3))
             {
                 Console.Clear();
-                Console.WriteLine("__________________________________");
-                Console.WriteLine("|1\tSign In?");
-                Console.WriteLine("|2\tCreate New Account?");
-                Console.WriteLine("|0\t<Close Program>");
-                Console.WriteLine("__________________________________");
+                Console.WriteLine(" __________________________________");
+                Console.WriteLine(" |1\tSign In?");
+                Console.WriteLine(" |2\tCreate New Account?");
+                Console.WriteLine(" |0\t<Close Program>");
+                Console.WriteLine(" |_________________________________");
                 if (!int.TryParse(Console.ReadLine(), out choice))
                 {
                     Console.WriteLine("Not an int");
@@ -75,13 +75,13 @@ namespace PizzaBox.Client
                                 int signedInChoice = 0;
                                 while (signedInChoice != 3) {
                                     Console.Clear();
-                                    Console.WriteLine("__________________________________");
-                                    Console.WriteLine("| Hello:\t[" + username + "]");
-                                    Console.WriteLine("|---------------------------------");
-                                    Console.WriteLine("|1. Choose Location");
-                                    Console.WriteLine("|2. Look at my order history. ");
-                                    Console.WriteLine("|3. sign out");
-                                    Console.WriteLine("|_________________________________");
+                                    Console.WriteLine(" __________________________________");
+                                    Console.WriteLine(" | Hello:\t[" + username + "]");
+                                    Console.WriteLine(" |---------------------------------");
+                                    Console.WriteLine(" |1. Choose Location");
+                                    Console.WriteLine(" |2. Look at my order history. ");
+                                    Console.WriteLine(" |3. sign out");
+                                    Console.WriteLine(" |_________________________________");
                                     if (!int.TryParse(Console.ReadLine(), out signedInChoice))
                                     {
                                         Console.WriteLine("Not an int");
@@ -99,11 +99,11 @@ namespace PizzaBox.Client
                                     if (signedInChoice == 2)
                                     {
                                         Console.Clear();
-                                        Console.WriteLine("__________________________________________________________");
-                                        Console.WriteLine("| Hello:\t[" + username + "]");
-                                        Console.WriteLine("|---------------------------------------------------------");
-                                        Console.WriteLine("| ... Order history ...");
-                                        Console.WriteLine("|_________________________________________________________");
+                                        Console.WriteLine(" __________________________________________________________");
+                                        Console.WriteLine(" | Hello:\t[" + username + "]");
+                                        Console.WriteLine(" |---------------------------------------------------------");
+                                        Console.WriteLine(" | ... Order history ...");
+                                        Console.WriteLine(" |_________________________________________________________");
                                     }
                                     /*
                                      * This choice signifies selecting the pizza parlor you wish to engage with 
@@ -114,23 +114,23 @@ namespace PizzaBox.Client
                                         while (locationChoice != 0)
                                         {
                                             Console.Clear();
-                                            Console.WriteLine("__________________________________________________________");
-                                            Console.WriteLine("| Hello:\t[" + username + "]");
-                                            Console.WriteLine("|---------------------------------------------------------");
-                                            Console.WriteLine("| Select a Pizza Parlor Location");
-                                            Console.WriteLine("|_________________________________________________________");
+                                            Console.WriteLine(" __________________________________________________________");
+                                            Console.WriteLine(" | Hello:\t[" + username + "]");
+                                            Console.WriteLine(" |---------------------------------------------------------");
+                                            Console.WriteLine(" | Select a Pizza Parlor Location");
+                                            Console.WriteLine(" |_________________________________________________________");
                                             int storeCount = 1;
 
                                             // read through the list of Pizza parlors available.
                                             foreach (Store storeLoc in stores.currentStores)
                                             {
-                                                Console.WriteLine("|{0}. :  {1}", storeCount, storeLoc.storeName);
-                                                Console.WriteLine("|        {0}\n", storeLoc.location);
-
+                                                Console.WriteLine(" |{0}. :  {1}", storeCount, storeLoc.storeName);
+                                                Console.WriteLine(" |        {0}", storeLoc.location);
+                                                Console.WriteLine(" |");
                                                 storeCount++;
                                             }
-                                            Console.WriteLine("|0. :  sign out");
-                                            Console.WriteLine("|_________________________________________________________");
+                                            Console.WriteLine(" |0. :  sign out");
+                                            Console.WriteLine(" |_________________________________________________________");
                                             if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
                                             {
                                                 Console.WriteLine("Not an int");
@@ -143,18 +143,12 @@ namespace PizzaBox.Client
                                             {
                                                 int inStoreChoice = -1;
                                                 while (inStoreChoice != 0) {
-                                                    Console.Clear();
-                                                    Console.WriteLine("__________________________________________________________");
-                                                    Console.WriteLine("| Hello:\t[" + username + "]");
-                                                    Console.WriteLine("|---------------------------------------------------------");
-                                                    Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
-                                                    Console.WriteLine("|_________________________________________________________");
-                                                    Console.WriteLine("| 1. : Order a Pizza.");
-                                                    Console.WriteLine("| 2. : Preview current order. ");
-                                                    Console.WriteLine("| 3. : Preview your history of orders at this location.");
-                                                    Console.WriteLine("| 0  : Return to Restaurant choice.");
-                                                    Console.WriteLine("|_________________________________________________________");
-                                                    Thread.Sleep(1500);
+                                                    printStoreHeaderLoggedIn(username, stores, locationChoice);
+                                                    Console.WriteLine(" | 1. : Order a Pizza.");
+                                                    Console.WriteLine(" | 2. : Preview current order. ");
+                                                    Console.WriteLine(" | 3. : Preview your history of orders at this location.");
+                                                    Console.WriteLine(" | 0. : Return to Restaurant choice.");
+                                                    Console.WriteLine(" |_________________________________________________________");
 
                                                     if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
                                                     {
@@ -166,21 +160,19 @@ namespace PizzaBox.Client
                                                     // Pizza Size
                                                     if(inStoreChoice == 1)
                                                     {
+                                                        // Current Pizza Order
+                                                        CurrentOrder CurOrd = new CurrentOrder();
+
                                                         int presetPizzaOptional = -1;
                                                         while (presetPizzaOptional != 0) {
-                                                            Console.Clear();
-                                                            Console.WriteLine("__________________________________________________________");
-                                                            Console.WriteLine("| Hello:\t[" + username + "]");
-                                                            Console.WriteLine("|---------------------------------------------------------");
-                                                            Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
-                                                            Console.WriteLine("|_________________________________________________________");
-                                                            Console.WriteLine("|  :: Choose Pizza Size ::");
-                                                            Console.WriteLine("| 1. : Hawaiian");
-                                                            Console.WriteLine("| 2. : Meat Lovers");
-                                                            Console.WriteLine("| 3  : Pepperoni");
-                                                            Console.WriteLine("| 4. : [MAKE YOUR OWN]");
-                                                            Console.WriteLine("| 0  : return to previous page...");
-                                                            Console.WriteLine("|_________________________________________________________");
+                                                            printStoreHeaderLoggedIn(username, stores, locationChoice);
+                                                            Console.WriteLine(" |  :: Choose Pizza Type ::");
+                                                            Console.WriteLine(" | 1. : Hawaiian");
+                                                            Console.WriteLine(" | 2. : Meat Lovers");
+                                                            Console.WriteLine(" | 3. : Pepperoni");
+                                                            Console.WriteLine(" | 4. : [MAKE YOUR OWN]");
+                                                            Console.WriteLine(" | 0. : return to previous page...");
+                                                            Console.WriteLine(" |_________________________________________________________");
 
                                                             if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
                                                             {
@@ -199,9 +191,7 @@ namespace PizzaBox.Client
                                                                 Pizza HawaiiPizza = new Pizza(); // Comes with sauce and Cheese
                                                                 HawaiiPizza.addToppings(Pizza.Toppings.pineapple);
                                                                 HawaiiPizza.chooseCrust(Pizza.Crust.deepdish);
-                                                                CurrentOrder CurOrd = new CurrentOrder();
-                                                                Console.WriteLine("CHECK HERE");
-                                                                Thread.Sleep(2000);
+                                                                
 
                                                                 // Get price of pizza
                                                                 int sizeOfPizza = -1;
@@ -228,6 +218,7 @@ namespace PizzaBox.Client
                                                                     // if user chooses to confirm then add order.
                                                                     if(sizeConfirmation(username, stores, locationChoice, HawaiiPizza))
                                                                     {
+                                                                        // Add 
                                                                         CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
                                                                         sizeOfPizza = 0;
                                                                     }
@@ -241,6 +232,14 @@ namespace PizzaBox.Client
                                                             {
                                                                 printPizzaSizeChoice(username, stores, locationChoice, "Pepperoni");
                                                             }
+                                                            if (presetPizzaOptional >=1 && presetPizzaOptional <=4)
+                                                            {
+                                                                printStoreHeaderLoggedIn(username, stores, locationChoice);
+                                                                Console.WriteLine(" | 1. : I'm ready to check out");
+                                                                Console.WriteLine(" | 2. : Add another Pizza Already!");
+                                                                Console.WriteLine(" |_________________________________________________________");
+                                                                Console.ReadLine();
+                                                            }
                                                         }
                                                     }
                                                     if (inStoreChoice == 2)
@@ -252,15 +251,11 @@ namespace PizzaBox.Client
                                                     {
                                                         OrderHistory StoresOrdHist = null;
                                                         StoresOrdHist.orders = stores.currentStores[locationChoice-1].userHistoryFromThisStore(username);
-                                                        Console.Clear();
-                                                        Console.WriteLine("__________________________________________________________");
-                                                        Console.WriteLine("| Hello:\t[" + username + "]");
-                                                        Console.WriteLine("|---------------------------------------------------------");
-                                                        Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
-                                                        Console.WriteLine("|_________________________________________________________");
-                                                        Console.WriteLine("| ::Orders::");
+                                                        printStoreHeaderLoggedIn(username, stores, locationChoice);
+                                                        Console.WriteLine(" |_________________________________________________________");
+                                                        Console.WriteLine(" | ::Orders::");
                                                         StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                                                        Console.WriteLine("|_________________________________________________________");
+                                                        Console.WriteLine(" |_________________________________________________________");
                                                         Console.ReadLine();
                                                     }
 
@@ -355,6 +350,24 @@ namespace PizzaBox.Client
             return choice;
         }
 
+
+        /// <summary>
+        /// Print a common reocurring theme
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        public static void printStoreHeaderLoggedIn(string username, StoreRepo stores, int locationChoice)
+        {
+            Console.Clear();
+            Console.WriteLine(" __________________________________________________________");
+            Console.WriteLine(" | Hello:\t[" + username + "]");
+            Console.WriteLine(" |---------------------------------------------------------");
+            Console.WriteLine(" | {0} |", stores.currentStores[locationChoice - 1].storeName);
+            Console.WriteLine(" |---------------------------------------------------------");
+        }
+
+
         /// <summary>
         /// Print the size options for a pizza
         /// </summary>
@@ -364,19 +377,14 @@ namespace PizzaBox.Client
         /// <param name="PizzaType"></param>
         public static void printPizzaSizeChoice(string username, StoreRepo stores, int locationChoice, string PizzaType)
         {
-            Console.Clear();
-            Console.WriteLine("__________________________________________________________");
-            Console.WriteLine("| Hello:\t[" + username + "]");
-            Console.WriteLine("|---------------------------------------------------------");
-            Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
-            Console.WriteLine("|_________________________________________________________");
-            Console.WriteLine("|  :: {0} ::", PizzaType);
-            Console.WriteLine("| 1. : 12\"");
-            Console.WriteLine("| 2. : 15\"");
-            Console.WriteLine("| 3  : 20\"");
-            Console.WriteLine("| 0  : return to previous page...");
-            Console.WriteLine("|_________________________________________________________");
-            Thread.Sleep(1000);
+            printStoreHeaderLoggedIn(username, stores, locationChoice);
+            Console.WriteLine(" |  :: {0} ::  |", PizzaType);
+            Console.WriteLine(" |---------------------------------------------------------");
+            Console.WriteLine(" | 1. : 12\"");
+            Console.WriteLine(" | 2. : 15\"");
+            Console.WriteLine(" | 3  : 20\"");
+            Console.WriteLine(" | 0  : return to previous page...");
+            Console.WriteLine(" |_________________________________________________________");
         }
 
         /// <summary>
@@ -392,16 +400,12 @@ namespace PizzaBox.Client
             Console.WriteLine("CHECK");
             int confirm = -1;
             while (!(confirm >=1 && confirm <=2)) {
-                Console.Clear();
-                Console.WriteLine("__________________________________________________________");
-                Console.WriteLine("| Hello:\t[" + username + "]");
-                Console.WriteLine("|---------------------------------------------------------");
-                Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
-                Console.WriteLine("|_________________________________________________________");
-                Console.WriteLine("| Price of Pizza: {0}", HawaiiPizza.getPriceOfPizza());
-                Console.WriteLine("|1. : Confirm Order");
-                Console.WriteLine("|2. : return to previous menu...");
-                Console.WriteLine("|_________________________________________________________");
+                printStoreHeaderLoggedIn(username, stores, locationChoice);
+                Console.WriteLine(" | %%% Price of Pizza: ${0} %%%|", HawaiiPizza.getPriceOfPizza());
+                Console.WriteLine(" |------------------------------");
+                Console.WriteLine(" |1. : Confirm Order");
+                Console.WriteLine(" |2. : return to previous menu...");
+                Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out confirm)) // try to read int choice
                 {
                     Console.WriteLine("Not an int");
