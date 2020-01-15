@@ -5,7 +5,7 @@ using PizzaBox.Domain;
 
 namespace PizzaBox.Storing
 {
-    public class StoreRepo : PizzaBox.Domain.Store
+    public class StoreRepo
     {
         // Handles multiple store Locations
         public List<Store> currentStores;

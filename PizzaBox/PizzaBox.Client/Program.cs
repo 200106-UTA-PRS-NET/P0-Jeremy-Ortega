@@ -24,9 +24,10 @@ namespace PizzaBox.Client
         private static int SignIn()
         {
             // Initialize the main data structures going to be handling the pertinant selection data
-            List<Store>storeList = new List<Store>();
             StoreRepo stores = new StoreRepo();
-            storeList = stores.currentStores;
+            
+            Pizza pizza = new Pizza();
+
 
             int choice = -1;
             Dictionary<string, string> UserList = new Dictionary<string, string>();
@@ -78,21 +79,32 @@ namespace PizzaBox.Client
                                     Console.WriteLine("| Hello:\t[" + username + "]");
                                     Console.WriteLine("|---------------------------------");
                                     Console.WriteLine("|1. Choose Location");
-                                    Console.WriteLine("|2. sign out");
-                                    Console.WriteLine("__________________________________");
+                                    Console.WriteLine("|2. Look at my order history. ");
+                                    Console.WriteLine("|3. sign out");
+                                    Console.WriteLine("|_________________________________");
                                     if (!int.TryParse(Console.ReadLine(), out signedInChoice))
                                     {
                                         Console.WriteLine("Not an int");
                                         signedInChoice = -1;
                                         continue;
                                     }
-                                    if (signedInChoice == 2)
+                                    if (signedInChoice == 3)
                                     {
                                         Console.WriteLine("Signing Out...");
                                         Thread.Sleep(1500);
                                         break;
                                     }
 
+                                    // Look at order history
+                                    if (signedInChoice == 2)
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("__________________________________________________________");
+                                        Console.WriteLine("| Hello:\t[" + username + "]");
+                                        Console.WriteLine("|---------------------------------------------------------");
+                                        Console.WriteLine("| ... Order history ...");
+                                        Console.WriteLine("|_________________________________________________________");
+                                    }
                                     /*
                                      * This choice signifies selecting the pizza parlor you wish to engage with 
                                      */
@@ -110,7 +122,7 @@ namespace PizzaBox.Client
                                             int storeCount = 1;
 
                                             // read through the list of Pizza parlors available.
-                                            foreach (Store storeLoc in storeList)
+                                            foreach (Store storeLoc in stores.currentStores)
                                             {
                                                 Console.WriteLine("|{0}. :  {1}", storeCount, storeLoc.storeName);
                                                 Console.WriteLine("|        {0}\n", storeLoc.location);
@@ -118,19 +130,146 @@ namespace PizzaBox.Client
                                                 storeCount++;
                                             }
                                             Console.WriteLine("|0. :  sign out");
-                                            Console.WriteLine("__________________________________________________________");
+                                            Console.WriteLine("|_________________________________________________________");
                                             if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
                                             {
                                                 Console.WriteLine("Not an int");
                                                 locationChoice = -1;
                                                 continue;
                                             }
-                                            if (locationChoice > 0 && locationChoice <= storeList.Count)
+
+                                            // choose location and bring up data about that location
+                                            if (locationChoice > 0 && locationChoice <= stores.currentStores.Count)
                                             {
-                                                Console.WriteLine("You've chosen: {0}", storeList[locationChoice-1].storeName);
-                                                Console.WriteLine("\t\tat : {0}", storeList[locationChoice - 1].location);
-                                                Thread.Sleep(1500);
-                                                break;
+                                                int inStoreChoice = -1;
+                                                while (inStoreChoice != 0) {
+                                                    Console.Clear();
+                                                    Console.WriteLine("__________________________________________________________");
+                                                    Console.WriteLine("| Hello:\t[" + username + "]");
+                                                    Console.WriteLine("|---------------------------------------------------------");
+                                                    Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
+                                                    Console.WriteLine("|_________________________________________________________");
+                                                    Console.WriteLine("| 1. : Order a Pizza.");
+                                                    Console.WriteLine("| 2. : Preview current order. ");
+                                                    Console.WriteLine("| 3. : Preview your history of orders at this location.");
+                                                    Console.WriteLine("| 0  : Return to Restaurant choice.");
+                                                    Console.WriteLine("|_________________________________________________________");
+                                                    Thread.Sleep(1500);
+
+                                                    if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
+                                                    {
+                                                        Console.WriteLine("Not an int");
+                                                        inStoreChoice = -1;
+                                                        continue;
+                                                    }
+
+                                                    // Pizza Size
+                                                    if(inStoreChoice == 1)
+                                                    {
+                                                        int presetPizzaOptional = -1;
+                                                        while (presetPizzaOptional != 0) {
+                                                            Console.Clear();
+                                                            Console.WriteLine("__________________________________________________________");
+                                                            Console.WriteLine("| Hello:\t[" + username + "]");
+                                                            Console.WriteLine("|---------------------------------------------------------");
+                                                            Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
+                                                            Console.WriteLine("|_________________________________________________________");
+                                                            Console.WriteLine("|  :: Choose Pizza Size ::");
+                                                            Console.WriteLine("| 1. : Hawaiian");
+                                                            Console.WriteLine("| 2. : Meat Lovers");
+                                                            Console.WriteLine("| 3  : Pepperoni");
+                                                            Console.WriteLine("| 4. : [MAKE YOUR OWN]");
+                                                            Console.WriteLine("| 0  : return to previous page...");
+                                                            Console.WriteLine("|_________________________________________________________");
+
+                                                            if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
+                                                            {
+                                                                Console.WriteLine("Not an int");
+                                                                presetPizzaOptional = -1;
+                                                                continue;
+                                                            }
+                                                            if (presetPizzaOptional == 4) {
+                                                                printPizzaSizeChoice(username, stores, locationChoice, "[CUSTOM PIZZA]");
+                                                            }
+
+                                                            // Customer chose Hawaiian preset pizza.
+                                                            else if (presetPizzaOptional == 1)
+                                                            {
+                                                                printPizzaSizeChoice(username, stores, locationChoice, "Hawaiian Pizza");
+                                                                Pizza HawaiiPizza = new Pizza(); // Comes with sauce and Cheese
+                                                                HawaiiPizza.addToppings(Pizza.Toppings.pineapple);
+                                                                HawaiiPizza.chooseCrust(Pizza.Crust.deepdish);
+                                                                CurrentOrder CurOrd = new CurrentOrder();
+
+                                                                // Get price of pizza
+                                                                int sizeOfPizza = -1;
+                                                                while (sizeOfPizza != 0) {
+                                                                    if (!int.TryParse(Console.ReadLine(), out sizeOfPizza)) // try to read int choice
+                                                                    {
+                                                                        Console.WriteLine("Not an int");
+                                                                        sizeOfPizza = -1;
+                                                                        continue;
+                                                                    }
+                                                                    if (sizeOfPizza == 1)
+                                                                    {
+                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.twelveInch;
+                                                                    }
+                                                                    else if (sizeOfPizza == 2)
+                                                                    {
+                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.fifteenInch;
+                                                                    }
+                                                                    else if (sizeOfPizza == 3)
+                                                                    {
+                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.twentyInch;
+                                                                    }
+                                                                    sizeOfPizza = 0;
+
+                                                                    // if user chooses to confirm then add order.
+                                                                    if(sizeConfirmation(username, stores, locationChoice, HawaiiPizza))
+                                                                    {
+                                                                        CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
+                                                                    }
+                                                                }
+                                                            }
+                                                            else if (presetPizzaOptional == 2)
+                                                            {
+                                                                printPizzaSizeChoice(username, stores, locationChoice, "Meat Lovers");
+                                                            }
+                                                            else if (presetPizzaOptional == 3)
+                                                            {
+                                                                printPizzaSizeChoice(username, stores, locationChoice, "Pepperoni");
+                                                            }
+                                                        }
+                                                    }
+                                                    if (inStoreChoice == 2)
+                                                    {
+
+                                                    }
+                                                    // Look at previous order history at current location
+                                                    if (inStoreChoice == 3)
+                                                    {
+                                                        OrderHistory StoresOrdHist = null;
+                                                        StoresOrdHist.orders = stores.currentStores[locationChoice-1].userHistoryFromThisStore(username);
+                                                        Console.Clear();
+                                                        Console.WriteLine("__________________________________________________________");
+                                                        Console.WriteLine("| Hello:\t[" + username + "]");
+                                                        Console.WriteLine("|---------------------------------------------------------");
+                                                        Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
+                                                        Console.WriteLine("|_________________________________________________________");
+                                                        Console.WriteLine("| ::Orders::");
+                                                        StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
+                                                        Console.WriteLine("|_________________________________________________________");
+                                                        Console.ReadLine();
+                                                    }
+
+                                                    if(inStoreChoice == 0)
+                                                    {
+                                                        Console.WriteLine("returning to the previous page...");
+                                                        Thread.Sleep(700);
+                                                        break;
+                                                    } 
+                                                }
+                                                
                                             }
                                             if (locationChoice == 0)
                                             {
@@ -214,7 +353,74 @@ namespace PizzaBox.Client
             return choice;
         }
 
+        /// <summary>
+        /// Print the size options for a pizza
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="PizzaType"></param>
+        public static void printPizzaSizeChoice(string username, StoreRepo stores, int locationChoice, string PizzaType)
+        {
+            Console.Clear();
+            Console.WriteLine("__________________________________________________________");
+            Console.WriteLine("| Hello:\t[" + username + "]");
+            Console.WriteLine("|---------------------------------------------------------");
+            Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
+            Console.WriteLine("|_________________________________________________________");
+            Console.WriteLine("|  :: {0} ::", PizzaType);
+            Console.WriteLine("| 1. : 12\"");
+            Console.WriteLine("| 2. : 15\"");
+            Console.WriteLine("| 3  : 20\"");
+            Console.WriteLine("| 0  : return to previous page...");
+            Console.WriteLine("|_________________________________________________________");
+            Thread.Sleep(1000);
+        }
 
+        /// <summary>
+        /// Allow the user an opportunity to back out of a pizza, not the entire order.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="HawaiiPizza"></param>
+        /// <returns></returns>
+        public static bool sizeConfirmation(string username, StoreRepo stores, int locationChoice, Pizza HawaiiPizza)
+        {
+            Console.WriteLine("CHECK");
+            int confirm = -1;
+            while (confirm >=1 && confirm <=2) {
+                Console.WriteLine("__________________________________________________________");
+                Console.WriteLine("| Hello:\t[" + username + "]");
+                Console.WriteLine("|---------------------------------------------------------");
+                Console.WriteLine("| {0}", stores.currentStores[locationChoice - 1].storeName);
+                Console.WriteLine("|_________________________________________________________");
+                Console.WriteLine("| Price of Pizza: {0}", HawaiiPizza.getPriceOfPizza());
+                Console.WriteLine("|1. : Confirm Order");
+                Console.WriteLine("|2. : return to previous menu...");
+                Console.WriteLine("|_________________________________________________________");
+                if (!int.TryParse(Console.ReadLine(), out confirm)) // try to read int choice
+                {
+                    Console.WriteLine("Not an int");
+                    confirm = -1;
+                    continue;
+                }
+                if (confirm == 1)
+                {
+                    return true;
+                }
+                if (confirm == 2)
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Not an option");
+                    confirm = -1;
+                }
+            }
+            return false;
+        }
 
     }
 }
