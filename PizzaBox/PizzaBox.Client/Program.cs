@@ -200,6 +200,8 @@ namespace PizzaBox.Client
                                                                 HawaiiPizza.addToppings(Pizza.Toppings.pineapple);
                                                                 HawaiiPizza.chooseCrust(Pizza.Crust.deepdish);
                                                                 CurrentOrder CurOrd = new CurrentOrder();
+                                                                Console.WriteLine("CHECK HERE");
+                                                                Thread.Sleep(2000);
 
                                                                 // Get price of pizza
                                                                 int sizeOfPizza = -1;
@@ -222,12 +224,12 @@ namespace PizzaBox.Client
                                                                     {
                                                                         HawaiiPizza.pizzaSize = Pizza.PizzaSize.twentyInch;
                                                                     }
-                                                                    sizeOfPizza = 0;
 
                                                                     // if user chooses to confirm then add order.
                                                                     if(sizeConfirmation(username, stores, locationChoice, HawaiiPizza))
                                                                     {
                                                                         CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
+                                                                        sizeOfPizza = 0;
                                                                     }
                                                                 }
                                                             }
@@ -389,7 +391,8 @@ namespace PizzaBox.Client
         {
             Console.WriteLine("CHECK");
             int confirm = -1;
-            while (confirm >=1 && confirm <=2) {
+            while (!(confirm >=1 && confirm <=2)) {
+                Console.Clear();
                 Console.WriteLine("__________________________________________________________");
                 Console.WriteLine("| Hello:\t[" + username + "]");
                 Console.WriteLine("|---------------------------------------------------------");
