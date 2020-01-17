@@ -151,169 +151,12 @@ namespace PizzaBox.Client
                                                 // Cx Customers current order selections.  Basically each pizza is a new "order" however
                                                 // It doesn't get it's persistance until checkout where The entire order gets the same order
                                                 // ID to resemble a full order consisting of one or many pizzas.
-                                                OrderHistory currentOrder = new OrderHistory();
+                                                OrderHistory LocationOrderHistory = new OrderHistory();
+                                                CurrentOrder CurOrd = new CurrentOrder();
 
-                                                int inStoreChoice = -1;
-                                                while (inStoreChoice != 0) {
-                                                    printStoreHeaderLoggedIn(username, stores, locationChoice);
-                                                    Console.WriteLine(" | 1. : Order a Pizza.");
-                                                    Console.WriteLine(" | 2. : Preview current order. ");
-                                                    Console.WriteLine(" | 3. : Preview your history of orders at this location.");
-                                                    Console.WriteLine(" | 0. : Return to Restaurant choice.");
-                                                    Console.WriteLine(" |_________________________________________________________");
+                                                inStoreLogic(username, stores, locationChoice, CurOrd, LocationOrderHistory);
+                                                // In Store Logic
 
-                                                    if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
-                                                    {
-                                                        Console.WriteLine("Not an option");
-                                                        inStoreChoice = -1;
-                                                        continue;
-                                                    }
-
-                                                    // Pizza Size
-                                                    if(inStoreChoice == 1)
-                                                    {
-                                                        // Current Pizza Order
-                                                        CurrentOrder CurOrd = new CurrentOrder();
-
-                                                        int presetPizzaOptional = -1;
-                                                        while (presetPizzaOptional != 0) {
-                                                            printStoreHeaderLoggedIn(username, stores, locationChoice);
-                                                            Console.WriteLine(" |  :: Choose Pizza Type ::");
-                                                            Console.WriteLine(" | 1. : Hawaiian");
-                                                            Console.WriteLine(" | 2. : Meat Lovers");
-                                                            Console.WriteLine(" | 3. : Pepperoni");
-                                                            Console.WriteLine(" | 4. : [MAKE YOUR OWN]");
-                                                            Console.WriteLine(" | 0. : return to previous page...");
-                                                            Console.WriteLine(" |_________________________________________________________");
-
-                                                            if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
-                                                            {
-                                                                Console.WriteLine("Not an option");
-                                                                presetPizzaOptional = -1;
-                                                                continue;
-                                                            }
-                                                            if (presetPizzaOptional == 4) {
-                                                                printPizzaSizeChoice(username, stores, locationChoice, "[CUSTOM PIZZA]");
-                                                            }
-
-                                                            // Customer chose Hawaiian preset pizza.
-                                                            else if (presetPizzaOptional == 1)
-                                                            {
-                                                                printPizzaSizeChoice(username, stores, locationChoice, "Hawaiian Pizza");
-                                                                Pizza HawaiiPizza = new Pizza(); // Comes with sauce and Cheese
-                                                                HawaiiPizza.addToppings(Pizza.Toppings.pineapple);
-                                                                HawaiiPizza.chooseCrust(Pizza.Crust.deepdish);
-                                                                
-
-                                                                // Get price of pizza
-                                                                int sizeOfPizza = -1;
-                                                                while (sizeOfPizza != 0) {
-                                                                    if (!int.TryParse(Console.ReadLine(), out sizeOfPizza)) // try to read int choice
-                                                                    {
-                                                                        Console.WriteLine("Not an option");
-                                                                        sizeOfPizza = -1;
-                                                                        continue;
-                                                                    }
-                                                                    if (sizeOfPizza == 1)
-                                                                    {
-                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.twelveInch;
-                                                                    }
-                                                                    else if (sizeOfPizza == 2)
-                                                                    {
-                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.fifteenInch;
-                                                                    }
-                                                                    else if (sizeOfPizza == 3)
-                                                                    {
-                                                                        HawaiiPizza.pizzaSize = Pizza.PizzaSize.twentyInch;
-                                                                    }
-
-                                                                    // if user chooses to confirm then add order.
-                                                                    if(sizeConfirmation(username, stores, locationChoice, HawaiiPizza))
-                                                                    {
-                                                                        // Add The pizza to the order for this restaurant and user
-                                                                        CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
-                                                                        // currentOrder.EnterNewCompletedOrder(CurOrd);
-                                                                        sizeOfPizza = 0;
-                                                                    }
-                                                                }
-
-
-
-                                                            }
-                                                            else if (presetPizzaOptional == 2)
-                                                            {
-                                                                printPizzaSizeChoice(username, stores, locationChoice, "Meat Lovers");
-                                                            }
-                                                            else if (presetPizzaOptional == 3)
-                                                            {
-                                                                printPizzaSizeChoice(username, stores, locationChoice, "Pepperoni");
-                                                            }
-
-                                                            // execute after choosing a pizza, This acts as a persisting layer to persist to a database hopefully.
-                                                            if (presetPizzaOptional >=1 && presetPizzaOptional <=4)
-                                                            {
-                                                                int checkOutOrAddAnother = -1;
-                                                                while (checkOutOrAddAnother != 1 && checkOutOrAddAnother != 2) { 
-                                                                    printStoreHeaderLoggedIn(username, stores, locationChoice);
-                                                                    Console.WriteLine(" | 1. : I'm ready to check out");
-                                                                    Console.WriteLine(" | 2. : Add another Pizza Already!");
-                                                                    Console.WriteLine(" |_________________________________________________________");
-                                                                    if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
-                                                                    {
-                                                                        Console.WriteLine("Not an option");
-                                                                        checkOutOrAddAnother = -1;
-                                                                        continue;
-                                                                    }
-
-                                                                    // Call method to print Cx Orders
-                                                                    if (checkOutOrAddAnother == 1)
-                                                                    {
-                                                                        // call method to print Cx current orders
-                                                                        Console.Clear();
-                                                                        Console.WriteLine("About to try to print stuff");                        
-                                                                        printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, currentOrder, CurOrd);
-                                                                        Console.ReadLine();
-
-                                                                    }
-                                                                    else if (checkOutOrAddAnother == 2)
-                                                                    {
-                                                                        Console.Clear();
-                                                                        Console.WriteLine("Adding Another Pizza");
-                                                                        Thread.Sleep(600);
-                                                                    }
-                                                                }
-                                                            }
-
-
-                                                        }
-                                                    }
-
-                                                    // This would be the second store
-                                                    if (inStoreChoice == 2)
-                                                    {
-
-                                                    }
-                                                    // Look at previous order history at current location
-                                                    if (inStoreChoice == 3)
-                                                    {
-                                                        OrderHistory StoresOrdHist = null;
-                                                        StoresOrdHist.orders = stores.currentStores[locationChoice-1].userHistoryFromThisStore(username);
-                                                        printStoreHeaderLoggedIn(username, stores, locationChoice);
-                                                        Console.WriteLine(" |_________________________________________________________");
-                                                        Console.WriteLine(" | ::Orders::");
-                                                        StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                                                        Console.WriteLine(" |_________________________________________________________");
-                                                        Console.ReadLine();
-                                                    }
-
-                                                    if(inStoreChoice == 0)
-                                                    {
-                                                        Console.WriteLine("returning to the previous page...");
-                                                        Thread.Sleep(700);
-                                                        break;
-                                                    } 
-                                                }
-                                                
                                             }
                                             if (locationChoice == 0)
                                             {
@@ -398,6 +241,235 @@ namespace PizzaBox.Client
         }
 
 
+
+        /// <summary>
+        /// Main Logic for initial choices a Cx can make when they login to the store
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="CurOrd"></param>
+        /// <param name="LocationOrderHistory"></param>
+        public static void inStoreLogic(string username, StoreRepo stores, int locationChoice, CurrentOrder CurOrd, OrderHistory LocationOrderHistory)
+        {
+            int inStoreChoice = -1;
+            while (inStoreChoice != 0)
+            {
+                printStoreHeaderLoggedIn(username, stores, locationChoice);
+                Console.WriteLine(" | 1. : Order a Pizza.");
+                Console.WriteLine(" | 2. : Preview current order. ");
+                Console.WriteLine(" | 3. : Preview your history of orders at this location.");
+                Console.WriteLine(" | 0. : Return to Restaurant choice.");
+                Console.WriteLine(" |_________________________________________________________");
+
+                if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
+                {
+                    Console.WriteLine("Not an option");
+                    inStoreChoice = -1;
+                    continue;
+                }
+
+                // Pizza Size
+                if (inStoreChoice == 1)
+                {
+                    pizzaMakerChoice(username, stores, locationChoice, CurOrd, LocationOrderHistory);
+                }
+
+                // This would be the second store
+                if (inStoreChoice == 2)
+                {
+                    if (CurOrd.pizzasInOrder.Count == 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("No pizza's ordered yet!");
+                        Console.ReadLine();
+                    }
+                }
+                // Look at previous order history at current location
+                if (inStoreChoice == 3)
+                {
+                    OrderHistory StoresOrdHist = null;
+                    StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
+                    printStoreHeaderLoggedIn(username, stores, locationChoice);
+                    Console.WriteLine(" |_________________________________________________________");
+                    Console.WriteLine(" | ::Orders::");
+                    StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
+                    Console.WriteLine(" |_________________________________________________________");
+                    Console.ReadLine();
+                }
+
+                if (inStoreChoice == 0)
+                {
+                    Console.WriteLine("returning to the previous page...");
+                    Thread.Sleep(700);
+                    break;
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// The main logic for Ordering a pizza type
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="CurOrd"></param>
+        public static void pizzaMakerChoice(string username, StoreRepo stores,int locationChoice, CurrentOrder CurOrd, OrderHistory LocationOrderHistory)
+        {
+
+            int presetPizzaOptional = -1;
+            while (presetPizzaOptional != 0)
+            {
+                printStoreHeaderLoggedIn(username, stores, locationChoice);
+                Console.WriteLine(" |  :: Choose Pizza Type ::");
+                Console.WriteLine(" | 1. : Hawaiian");
+                Console.WriteLine(" | 2. : Meat Lovers");
+                Console.WriteLine(" | 3. : Pepperoni");
+                Console.WriteLine(" | 4. : [MAKE YOUR OWN]");
+                Console.WriteLine(" | 0. : return to previous page...");
+                Console.WriteLine(" |_________________________________________________________");
+
+                if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
+                {
+                    Console.WriteLine("Not an option");
+                    presetPizzaOptional = -1;
+                    continue;
+                }
+                if (presetPizzaOptional == 4)
+                {
+                    printPizzaSizeChoice(username, stores, locationChoice, "[CUSTOM PIZZA]");
+                }
+
+                // Customer chose Hawaiian preset pizza.
+                else if (presetPizzaOptional == 1)
+                {
+                    printPizzaSizeChoice(username, stores, locationChoice, "Hawaiian Pizza");
+                    Pizza HawaiiPizza = new Pizza(); // Comes with sauce and Cheese
+                    HawaiiPizza.addToppings(Pizza.Toppings.pineapple);
+                    HawaiiPizza.chooseCrust(Pizza.Crust.deepdish);
+                    presetPizzaSizeChoice(username, stores, locationChoice, HawaiiPizza, CurOrd);
+                }
+                // Cx chose Meat Lovers
+                else if (presetPizzaOptional == 2)
+                {
+                    printPizzaSizeChoice(username, stores, locationChoice, "Meat Lovers");
+                    Pizza MeatLovers = new Pizza(); // Comes with sauce and Cheese
+                    MeatLovers.addToppings(Pizza.Toppings.pepperoni);
+                    MeatLovers.addToppings(Pizza.Toppings.sausage);
+                    MeatLovers.chooseCrust(Pizza.Crust.deepdish);
+                    presetPizzaSizeChoice(username, stores, locationChoice, MeatLovers, CurOrd);
+                }
+                // Cx chose Pepperoni
+                else if (presetPizzaOptional == 3)
+                {
+                    printPizzaSizeChoice(username, stores, locationChoice, "Pepperoni");
+                    Pizza Pepperoni = new Pizza(); // Comes with sauce and Cheese
+                    Pepperoni.addToppings(Pizza.Toppings.pepperoni);
+                    Pepperoni.chooseCrust(Pizza.Crust.deepdish);
+                    presetPizzaSizeChoice(username, stores, locationChoice, Pepperoni, CurOrd);
+                }
+
+                // execute after choosing a pizza, This acts as a persisting layer to persist to a database hopefully.
+                if (presetPizzaOptional >= 1 && presetPizzaOptional <= 4)
+                {
+                    checkOutProcedure(username, locationChoice, LocationOrderHistory, CurOrd, stores);
+                }
+
+            }
+        }
+
+
+
+        /// <summary>
+        /// Add a preset Pizza of specified type
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="PresetPizza"></param>
+        /// <param name="CurOrd"></param>
+        public static void presetPizzaSizeChoice(string username, StoreRepo stores, int  locationChoice, Pizza PresetPizza, CurrentOrder CurOrd)
+        {
+            // Get price of pizza
+            int sizeOfPizza = -1;
+            while (sizeOfPizza != 0)
+            {
+                if (!int.TryParse(Console.ReadLine(), out sizeOfPizza)) // try to read int choice
+                {
+                    Console.WriteLine("Not an option");
+                    sizeOfPizza = -1;
+                    continue;
+                }
+                if (sizeOfPizza == 1)
+                {
+                    PresetPizza.pizzaSize = Pizza.PizzaSize.twelveInch;
+                }
+                else if (sizeOfPizza == 2)
+                {
+                    PresetPizza.pizzaSize = Pizza.PizzaSize.fifteenInch;
+                }
+                else if (sizeOfPizza == 3)
+                {
+                    PresetPizza.pizzaSize = Pizza.PizzaSize.twentyInch;
+                }
+
+                // if user chooses to confirm then add order.
+                if (sizeConfirmation(username, stores, locationChoice, PresetPizza))
+                {
+                    // Add The pizza to the order for this restaurant and user
+                    CurOrd.confirmPizzaOrder(PresetPizza, username, stores.currentStores[locationChoice - 1].storeName);
+                    // currentOrder.EnterNewCompletedOrder(CurOrd);
+                    sizeOfPizza = 0;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// checkout procedure
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="LocationOrderHistory"></param>
+        /// <param name="CurOrd"></param>
+        /// <param name="stores"></param>
+        public static void checkOutProcedure(string username, int locationChoice, OrderHistory LocationOrderHistory, CurrentOrder CurOrd, StoreRepo stores)
+        {
+            int checkOutOrAddAnother = -1;
+            while (checkOutOrAddAnother != 1 && checkOutOrAddAnother != 2)
+            {
+                printStoreHeaderLoggedIn(username, stores, locationChoice);
+                Console.WriteLine(" | 1. : I'm ready to check out");
+                Console.WriteLine(" | 2. : Add another Pizza Already!");
+                printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, LocationOrderHistory, CurOrd);
+                Console.WriteLine(" |_________________________________________________________");
+                if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
+                {
+                    Console.WriteLine("Not an option");
+                    checkOutOrAddAnother = -1;
+                    continue;
+                }
+
+                // Call method to print Cx Orders
+                if (checkOutOrAddAnother == 1)
+                {
+                    LocationOrderHistory.EnterNewCompletedOrder(CurOrd);
+
+                }
+                else if (checkOutOrAddAnother == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Adding Another Pizza");
+                    Thread.Sleep(600);
+                }
+            }
+        }
+
+
+
+
         /// <summary>
         /// Call this method to print all Cx Pizza's in their current order
         /// </summary>
@@ -406,7 +478,7 @@ namespace PizzaBox.Client
         /// <param name="locationChoice"></param>
         /// <param name="currentOrder"></param>
         public static void printCxPrevOrdersAtCurrLoc(string username, StoreRepo stores, int locationChoice,
-            OrderHistory currentOrder, CurrentOrder curOrd)
+            OrderHistory LocationOrderHistory, CurrentOrder curOrd)
         {
             Console.Clear();
             printStoreHeaderLoggedIn(username, stores, locationChoice);
@@ -434,9 +506,6 @@ namespace PizzaBox.Client
                 pizzaLineCounter++;
             }
             Console.WriteLine(" |_________________________________________________________\n");
-
-            currentOrder.EnterNewCompletedOrder(curOrd);
-
 
         }
 
