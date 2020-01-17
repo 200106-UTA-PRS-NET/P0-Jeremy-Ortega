@@ -164,7 +164,7 @@ namespace PizzaBox.Client
 
                                                     if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
                                                     {
-                                                        Console.WriteLine("Not an int");
+                                                        Console.WriteLine("Not an option");
                                                         inStoreChoice = -1;
                                                         continue;
                                                     }
@@ -188,7 +188,7 @@ namespace PizzaBox.Client
 
                                                             if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
                                                             {
-                                                                Console.WriteLine("Not an int");
+                                                                Console.WriteLine("Not an option");
                                                                 presetPizzaOptional = -1;
                                                                 continue;
                                                             }
@@ -210,7 +210,7 @@ namespace PizzaBox.Client
                                                                 while (sizeOfPizza != 0) {
                                                                     if (!int.TryParse(Console.ReadLine(), out sizeOfPizza)) // try to read int choice
                                                                     {
-                                                                        Console.WriteLine("Not an int");
+                                                                        Console.WriteLine("Not an option");
                                                                         sizeOfPizza = -1;
                                                                         continue;
                                                                     }
@@ -232,7 +232,7 @@ namespace PizzaBox.Client
                                                                     {
                                                                         // Add The pizza to the order for this restaurant and user
                                                                         CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
-                                                                        currentOrder.EnterNewCompletedOrder(CurOrd);
+                                                                        // currentOrder.EnterNewCompletedOrder(CurOrd);
                                                                         sizeOfPizza = 0;
                                                                     }
                                                                 }
@@ -260,7 +260,7 @@ namespace PizzaBox.Client
                                                                     Console.WriteLine(" |_________________________________________________________");
                                                                     if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
                                                                     {
-                                                                        Console.WriteLine("Not an int");
+                                                                        Console.WriteLine("Not an option");
                                                                         checkOutOrAddAnother = -1;
                                                                         continue;
                                                                     }
@@ -270,10 +270,10 @@ namespace PizzaBox.Client
                                                                     {
                                                                         // call method to print Cx current orders
                                                                         Console.Clear();
-                                                                        Console.WriteLine("About to try to print stuff");
-                                                                        Thread.Sleep(5000);
-                                                                        printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, currentOrder);
-                        
+                                                                        Console.WriteLine("About to try to print stuff");                        
+                                                                        printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, currentOrder, CurOrd);
+                                                                        Console.ReadLine();
+
                                                                     }
                                                                     else if (checkOutOrAddAnother == 2)
                                                                     {
@@ -405,34 +405,39 @@ namespace PizzaBox.Client
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="currentOrder"></param>
-        public static void printCxPrevOrdersAtCurrLoc(string username, StoreRepo stores, int locationChoice, OrderHistory currentOrder)
+        public static void printCxPrevOrdersAtCurrLoc(string username, StoreRepo stores, int locationChoice,
+            OrderHistory currentOrder, CurrentOrder curOrd)
         {
+            Console.Clear();
             printStoreHeaderLoggedIn(username, stores, locationChoice);
 
             // write each order Location
-            foreach (CurrentOrder po in currentOrder.orders)
+
+            // At each order location write all the pizza sizes, crust and price's in each order
+            Console.WriteLine(" | user: <{0}> order totalled: <${1}> |", curOrd.userName, curOrd.currOrderTotal);
+            Console.WriteLine(" |----------------------------------------");
+            // At each order give brief description of the pizza's ordered
+            int pizzaLineCounter = 1;
+            foreach (Pizza pOrd in curOrd.pizzasInOrder)
             {
-                // At each order location write all the pizza sizes, crust and price's in each order
-                Console.WriteLine(" | user: <{0}> order totalled: <${1}> ", po.userName, po.currOrderTotal);
 
-                // At each order give brief description of the pizza's ordered
-                int pizzaLineCounter = 1;
-                foreach (Pizza pOrd in po.pizzasInOrder)
+                // give toppings
+                Console.Write(" |{0}: {1} {2} pizza with", pizzaLineCounter, pOrd.pizzaSize, pOrd.getCrustChoice());
+                List<string> tops = pOrd.getChosenToppings();
+                foreach (string pTop in tops)
                 {
-
-                    // give toppings
-                    Console.Write(" |{0}: {1} pizza with", pizzaLineCounter, pOrd.pizzaSize);
-                    List<string> tops = pOrd.getChosenToppings();
-                    foreach (string pTop in tops)
-                    {
-                        Console.Write(" :{}", pTop);
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine(" | ---- Pizza Cost ---- <{}>", pOrd.getPriceOfPizza());
-                    Console.WriteLine(" |");
-                    pizzaLineCounter++;
+                    Console.Write(" <{0}>", pTop);
                 }
+                Console.WriteLine();
+                Console.WriteLine(" | ---- Pizza Cost ---- <{0}>", pOrd.getPriceOfPizza());
+                Console.WriteLine(" |");
+                pizzaLineCounter++;
             }
+            Console.WriteLine(" |_________________________________________________________\n");
+
+            currentOrder.EnterNewCompletedOrder(curOrd);
+
+
         }
 
 
@@ -491,9 +496,9 @@ namespace PizzaBox.Client
                 Console.WriteLine(" |1. : Confirm Pizza to order");
                 Console.WriteLine(" |2. : return to previous menu...");
                 Console.WriteLine(" |_________________________________________________________");
-                if (!int.TryParse(Console.ReadLine(), out confirm)) // try to read int choice
+                if (!int.TryParse(Console.ReadLine(), out confirm))
                 {
-                    Console.WriteLine("Not an int");
+                    Console.WriteLine("Not an option");
                     confirm = -1;
                     continue;
                 }
@@ -515,4 +520,6 @@ namespace PizzaBox.Client
         }
 
     }
+
+
 }
