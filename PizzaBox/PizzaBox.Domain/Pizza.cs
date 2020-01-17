@@ -37,8 +37,6 @@ namespace PizzaBox.Domain
 
 
 
-
-
         /// <summary>
         ///  Basic Pizza choice has no pizza with default pizza
         ///  constructor.
@@ -148,7 +146,7 @@ namespace PizzaBox.Domain
         {
             if (crust == Crust.thin)
             {
-                return "this";
+                return "thin";
             }
             else if (crust == Crust.deepdish)
             {
@@ -211,6 +209,7 @@ namespace PizzaBox.Domain
                     break;
             }
 
+
             // Chosen Toppings
             if (toppings.Contains(Toppings.cheese))
             {
@@ -232,6 +231,7 @@ namespace PizzaBox.Domain
             {
                 ToppingsPrice += 1.75;
             }
+
 
             // return total cost of pizza
             return pizzaSizeCost * CrustMultiplier + ToppingsPrice;

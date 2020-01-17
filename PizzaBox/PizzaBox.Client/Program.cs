@@ -79,8 +79,8 @@ namespace PizzaBox.Client
                                     Console.WriteLine(" | Hello:\t[" + username + "]");
                                     Console.WriteLine(" |---------------------------------");
                                     Console.WriteLine(" |1. Choose Location");
-                                    Console.WriteLine(" |2. Look at my order history. ");
-                                    Console.WriteLine(" |3. sign out");
+                                    // Console.WriteLine(" |2. Look at my order history. "); ignore until rest of project finished
+                                    Console.WriteLine(" |2. sign out");
                                     Console.WriteLine(" |_________________________________");
                                     if (!int.TryParse(Console.ReadLine(), out signedInChoice))
                                     {
@@ -88,14 +88,16 @@ namespace PizzaBox.Client
                                         signedInChoice = -1;
                                         continue;
                                     }
-                                    if (signedInChoice == 3)
+                                    if (signedInChoice == 2)
                                     {
                                         Console.WriteLine("Signing Out...");
                                         Thread.Sleep(1500);
                                         break;
                                     }
 
-                                    // Look at order history
+                                    // Look at order history ignore functionality until rest of project is finished and maybe add at end
+                                    // for now we only want a Cx to access their orders once signed into a location.
+                                    /*
                                     if (signedInChoice == 2)
                                     {
                                         Console.Clear();
@@ -105,6 +107,7 @@ namespace PizzaBox.Client
                                         Console.WriteLine(" | ... Order history ...");
                                         Console.WriteLine(" |_________________________________________________________");
                                     }
+                                    */
                                     /*
                                      * This choice signifies selecting the pizza parlor you wish to engage with 
                                      */
@@ -141,6 +144,15 @@ namespace PizzaBox.Client
                                             // choose location and bring up data about that location
                                             if (locationChoice > 0 && locationChoice <= stores.currentStores.Count)
                                             {
+                                                // This Object pulls from persisted data from a database on this store's location
+                                                // pertaining to this Cx
+                                                // This will need to be picked up from the database.
+                                                OrderHistory orderHistoryOfCurrentLocation = null;
+                                                // Cx Customers current order selections.  Basically each pizza is a new "order" however
+                                                // It doesn't get it's persistance until checkout where The entire order gets the same order
+                                                // ID to resemble a full order consisting of one or many pizzas.
+                                                OrderHistory currentOrder = new OrderHistory();
+
                                                 int inStoreChoice = -1;
                                                 while (inStoreChoice != 0) {
                                                     printStoreHeaderLoggedIn(username, stores, locationChoice);
@@ -218,11 +230,15 @@ namespace PizzaBox.Client
                                                                     // if user chooses to confirm then add order.
                                                                     if(sizeConfirmation(username, stores, locationChoice, HawaiiPizza))
                                                                     {
-                                                                        // Add 
+                                                                        // Add The pizza to the order for this restaurant and user
                                                                         CurOrd.confirmPizzaOrder(HawaiiPizza, username, stores.currentStores[locationChoice - 1].storeName);
+                                                                        currentOrder.EnterNewCompletedOrder(CurOrd);
                                                                         sizeOfPizza = 0;
                                                                     }
                                                                 }
+
+
+
                                                             }
                                                             else if (presetPizzaOptional == 2)
                                                             {
@@ -232,16 +248,47 @@ namespace PizzaBox.Client
                                                             {
                                                                 printPizzaSizeChoice(username, stores, locationChoice, "Pepperoni");
                                                             }
+
+                                                            // execute after choosing a pizza, This acts as a persisting layer to persist to a database hopefully.
                                                             if (presetPizzaOptional >=1 && presetPizzaOptional <=4)
                                                             {
-                                                                printStoreHeaderLoggedIn(username, stores, locationChoice);
-                                                                Console.WriteLine(" | 1. : I'm ready to check out");
-                                                                Console.WriteLine(" | 2. : Add another Pizza Already!");
-                                                                Console.WriteLine(" |_________________________________________________________");
-                                                                Console.ReadLine();
+                                                                int checkOutOrAddAnother = -1;
+                                                                while (checkOutOrAddAnother != 1 && checkOutOrAddAnother != 2) { 
+                                                                    printStoreHeaderLoggedIn(username, stores, locationChoice);
+                                                                    Console.WriteLine(" | 1. : I'm ready to check out");
+                                                                    Console.WriteLine(" | 2. : Add another Pizza Already!");
+                                                                    Console.WriteLine(" |_________________________________________________________");
+                                                                    if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
+                                                                    {
+                                                                        Console.WriteLine("Not an int");
+                                                                        checkOutOrAddAnother = -1;
+                                                                        continue;
+                                                                    }
+
+                                                                    // Call method to print Cx Orders
+                                                                    if (checkOutOrAddAnother == 1)
+                                                                    {
+                                                                        // call method to print Cx current orders
+                                                                        Console.Clear();
+                                                                        Console.WriteLine("About to try to print stuff");
+                                                                        Thread.Sleep(5000);
+                                                                        printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, currentOrder);
+                        
+                                                                    }
+                                                                    else if (checkOutOrAddAnother == 2)
+                                                                    {
+                                                                        Console.Clear();
+                                                                        Console.WriteLine("Adding Another Pizza");
+                                                                        Thread.Sleep(600);
+                                                                    }
+                                                                }
                                                             }
+
+
                                                         }
                                                     }
+
+                                                    // This would be the second store
                                                     if (inStoreChoice == 2)
                                                     {
 
@@ -352,6 +399,44 @@ namespace PizzaBox.Client
 
 
         /// <summary>
+        /// Call this method to print all Cx Pizza's in their current order
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="stores"></param>
+        /// <param name="locationChoice"></param>
+        /// <param name="currentOrder"></param>
+        public static void printCxPrevOrdersAtCurrLoc(string username, StoreRepo stores, int locationChoice, OrderHistory currentOrder)
+        {
+            printStoreHeaderLoggedIn(username, stores, locationChoice);
+
+            // write each order Location
+            foreach (CurrentOrder po in currentOrder.orders)
+            {
+                // At each order location write all the pizza sizes, crust and price's in each order
+                Console.WriteLine(" | user: <{0}> order totalled: <${1}> ", po.userName, po.currOrderTotal);
+
+                // At each order give brief description of the pizza's ordered
+                int pizzaLineCounter = 1;
+                foreach (Pizza pOrd in po.pizzasInOrder)
+                {
+
+                    // give toppings
+                    Console.Write(" |{0}: {1} pizza with", pizzaLineCounter, pOrd.pizzaSize);
+                    List<string> tops = pOrd.getChosenToppings();
+                    foreach (string pTop in tops)
+                    {
+                        Console.Write(" :{}", pTop);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine(" | ---- Pizza Cost ---- <{}>", pOrd.getPriceOfPizza());
+                    Console.WriteLine(" |");
+                    pizzaLineCounter++;
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Print a common reocurring theme
         /// </summary>
         /// <param name="username"></param>
@@ -403,7 +488,7 @@ namespace PizzaBox.Client
                 printStoreHeaderLoggedIn(username, stores, locationChoice);
                 Console.WriteLine(" | %%% Price of Pizza: ${0} %%%|", HawaiiPizza.getPriceOfPizza());
                 Console.WriteLine(" |------------------------------");
-                Console.WriteLine(" |1. : Confirm Order");
+                Console.WriteLine(" |1. : Confirm Pizza to order");
                 Console.WriteLine(" |2. : return to previous menu...");
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out confirm)) // try to read int choice
