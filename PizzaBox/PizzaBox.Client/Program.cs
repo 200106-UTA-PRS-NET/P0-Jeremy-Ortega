@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Threading;
 using PizzaBox.Domain;
 using PizzaBox.Storing;
+using PizzaBox.Storing.Repositories;
 
 namespace PizzaBox.Client
 {
+    
     class Program
     {
+
+        public Program()
+        {
+
+        }
 
         static void Main(string[] args)
         {
@@ -15,16 +22,16 @@ namespace PizzaBox.Client
             StoreRepo stores = new StoreRepo();
             Pizza pizza = new Pizza();
             Dictionary<string, string> UserList = new Dictionary<string, string>();
-
+            _a_SignIn SI = new _a_SignIn();
             // Sign In 
-            int choice = SignIn(UserList, pizza, stores);
+            int choice = SI.SignInToAccount(UserList, pizza, stores);
 
             Thread.Sleep(1500);
         }
 
 
-
-
+        /*
+        /////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Get through the sign in process.
         /// </summary>
@@ -139,7 +146,7 @@ namespace PizzaBox.Client
 
 
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// May keep this page for added functionality later, Possibly have a store owner special option or add some other functionality.
         /// Possibly stats on when you last visited certain stores.
@@ -185,10 +192,10 @@ namespace PizzaBox.Client
                     Console.WriteLine(" | ... Order history ...");
                     Console.WriteLine(" |_________________________________________________________");
                 }
-                */
-                /*
-                 * This choice signifies selecting the pizza parlor you wish to engage with 
-                 */
+                
+                
+                 // This choice signifies selecting the pizza parlor you wish to engage with 
+                 
                 if (signedInChoice == 1)
                 {
                     choosePizzaStoreLocation(username, stores);
@@ -199,7 +206,7 @@ namespace PizzaBox.Client
 
         
 
-
+        ///////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Choose Pizza Location
         /// </summary>
@@ -264,7 +271,7 @@ namespace PizzaBox.Client
 
 
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Main Logic for initial choices a Cx can make when they login to the store
         /// </summary>
@@ -331,7 +338,7 @@ namespace PizzaBox.Client
         }
 
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// The main logic for Ordering a pizza type
         /// </summary>
@@ -404,7 +411,7 @@ namespace PizzaBox.Client
         }
 
 
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Add a preset Pizza of specified type
         /// </summary>
@@ -450,6 +457,8 @@ namespace PizzaBox.Client
         }
 
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// checkout procedure
         /// </summary>
@@ -492,7 +501,7 @@ namespace PizzaBox.Client
 
 
 
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Call this method to print all Cx Pizza's in their current order
         /// </summary>
@@ -532,7 +541,7 @@ namespace PizzaBox.Client
 
         }
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Print a common reocurring theme
         /// </summary>
@@ -549,7 +558,7 @@ namespace PizzaBox.Client
             Console.WriteLine(" |---------------------------------------------------------");
         }
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Print the size options for a pizza
         /// </summary>
@@ -569,6 +578,8 @@ namespace PizzaBox.Client
             Console.WriteLine(" |_________________________________________________________");
         }
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Allow the user an opportunity to back out of a pizza, not the entire order.
         /// </summary>
@@ -610,6 +621,7 @@ namespace PizzaBox.Client
             }
             return false;
         }
+*/
 
     }
 

@@ -1,22 +1,22 @@
 ﻿using System;
+using PizzaBox.Domain;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
 namespace PizzaBox.Storing.Repositories
 {
-    class LocationOrderHistory
+    class _b_LocationOrderHistory
     {
+        _c_ChooseStoreLocation CSL;
 
-        StoreRepo stores;
-
-        public LocationOrderHistory()
+        public _b_LocationOrderHistory()
         {
-
+            CSL = new _c_ChooseStoreLocation();
         }
 
 
-        public void ChooseVewOrdersOrStorePortal(string username)
+        public void ChooseVewOrdersOrStorePortal(string username, StoreRepo stores, OrderHistory orderHistory)
         {
 
             int signedInChoice = 0;
@@ -65,7 +65,7 @@ namespace PizzaBox.Storing.Repositories
                  */
                 if (signedInChoice == 1)
                 {
-                    choosePizzaStoreLocation(username, stores);
+                    CSL.choosePizzaStoreLocation(username, stores, orderHistory);
                 }
             }
         }
