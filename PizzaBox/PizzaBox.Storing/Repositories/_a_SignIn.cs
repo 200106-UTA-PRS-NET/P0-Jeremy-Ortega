@@ -57,11 +57,17 @@ namespace PizzaBox.Storing.Repositories
                     Console.WriteLine(" ---- password ----");
                     string password = Console.ReadLine();
 
+                    string name = "";
                     bool correctAuth = false;
                     foreach (var Cx in customers){
                         if (Cx.Username != null && Cx.Username.Equals(email))
-                        if (Cx.UserPass.Equals(password))
-                        correctAuth = true;
+                        {
+                            if (Cx.UserPass.Equals(password))
+                            {
+                                name = Cx.Fname;
+                                correctAuth = true;
+                            }
+                        }
                     }
                     if (!correctAuth)
                     {
@@ -88,7 +94,7 @@ namespace PizzaBox.Storing.Repositories
                     ///////////////// remove following line /////////////////////
                     OrderHistory orderHistory = new OrderHistory();
 
-                    LOH.ChooseVewOrdersOrStorePortal(email, stores, orderHistory, repo);
+                    LOH.ChooseVewOrdersOrStorePortal(name, stores, orderHistory, repo);
                     //    }
 
                     //    // Else return the prompt that they weren't found in the system.

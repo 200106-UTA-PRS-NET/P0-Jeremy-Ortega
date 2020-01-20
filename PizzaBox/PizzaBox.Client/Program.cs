@@ -31,10 +31,10 @@ namespace PizzaBox.Client
             _a_SignIn SI = new _a_SignIn();
             // Sign In 
 
-            var repo = Dependencies.CreateCustomerRepository();
+            var CxRepo = Dependencies.CreateCustomerRepository();
             // var customer = repo.ReadInCustomer();
 
-            int choice = SI.SignInToAccount(UserList, pizza, stores, repo);
+            int choice = SI.SignInToAccount(UserList, pizza, stores, CxRepo);
 
             //Storing.Abstractions.IRepositoryCustomer<Customer1> repo
 

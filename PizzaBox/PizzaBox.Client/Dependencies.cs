@@ -13,7 +13,7 @@ namespace PizzaBox.Client
     class Dependencies
     {
 
-        public static IRepositoryCustomer<Storing.Customer1> CreateCustomerRepository()
+        public static IRepositoryCustomer<Customer1> CreateCustomerRepository()
         {
             var configurBuilder = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
@@ -25,6 +25,20 @@ namespace PizzaBox.Client
             var options = optionsBuilder.Options;
             Project0Context db = new Project0Context(options);
             return new CustomerRepository(db);
+        }
+
+        public static IRepositoryOrders<Order1> CreateOrderRepository()
+        {
+            var configurBuilder = new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = configurBuilder.Build();
+            var optionsBuilder = new DbContextOptionsBuilder<Project0Context>();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Project0"));
+            var options = optionsBuilder.Options;
+            Project0Context db = new Project0Context(options);
+            return new OrderRepository(db);
         }
     }
 }

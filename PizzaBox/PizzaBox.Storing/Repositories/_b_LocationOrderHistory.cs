@@ -16,8 +16,17 @@ namespace PizzaBox.Storing.Repositories
         }
 
 
-        public void ChooseVewOrdersOrStorePortal(string username, StoreRepo stores, OrderHistory orderHistory, Abstractions.IRepositoryCustomer<Customer1> repo)
+        public void ChooseVewOrdersOrStorePortal(string username, StoreRepo stores, OrderHistory orderHistory, 
+            Abstractions.IRepositoryCustomer<Customer1> repo,
+            Abstractions.IRepositoryOrders<Order1> orderRepo)
         {
+
+            var customer = repo.ReadInCustomer();
+            var orders = orderRepo.ReadInOrder();
+            foreach (var a in orders)
+            {
+
+            }
 
             int signedInChoice = 0;
             while (signedInChoice != 3)
@@ -45,15 +54,14 @@ namespace PizzaBox.Storing.Repositories
                 // Show all order history
                 else if (signedInChoice == 2)
                 {
-                    if (signedInChoice == 2)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(" __________________________________________________________");
-                        Console.WriteLine(" | Hello:\t[" + username + "]");
-                        Console.WriteLine(" |---------------------------------------------------------");
-                        Console.WriteLine(" | ... Order history ...");
-                        Console.WriteLine(" |_________________________________________________________");
-                    }
+
+                    Console.Clear();
+                    Console.WriteLine(" __________________________________________________________");
+                    Console.WriteLine(" | Hello:\t[" + username + "]");
+                    Console.WriteLine(" |---------------------------------------------------------");
+                    Console.WriteLine(" | ... Order history ...");
+                    Console.WriteLine(" |_________________________________________________________");
+
                     Console.WriteLine("...Still in progress");
                     Thread.Sleep(1100);
                 }
