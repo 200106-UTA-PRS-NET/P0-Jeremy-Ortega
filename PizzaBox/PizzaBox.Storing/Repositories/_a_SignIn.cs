@@ -21,8 +21,11 @@ namespace PizzaBox.Storing.Repositories
         /// <summary>
         /// Get through the sign in process.
         /// </summary>
-        public int SignInToAccount(Dictionary<string, string> UserList, Pizza pizza, StoreRepo stores)
-        {
+        public int SignInToAccount(Dictionary<string, string> UserList, Pizza pizza, StoreRepo stores, Abstractions.IRepositoryCustomer<Customer1> repo)
+        {   
+
+            var customers = repo.ReadInCustomer();
+            
 
             int choice = -1;
             while (!(choice >= 1 && choice <= 3))
@@ -43,86 +46,144 @@ namespace PizzaBox.Storing.Repositories
                 //ask for user name and password of a previously created account 
                 if (choice == 1)
                 {
-                    // username
+
+                    // email
                     Console.Clear();
-                    Console.WriteLine(" ---- username ----");
-                    string username = Console.ReadLine();
+                    Console.WriteLine(" ---- email ----");
+                    string email = Console.ReadLine();
 
                     // password
                     Console.Clear();
                     Console.WriteLine(" ---- password ----");
                     string password = Console.ReadLine();
 
-                    // check if dictionary contains the key, then if the password is the same as the key.
-                    if (UserList.ContainsKey(username))
+                    bool correctAuth = false;
+                    foreach (var Cx in customers){
+                        if (Cx.Username != null && Cx.Username.Equals(email))
+                        if (Cx.UserPass.Equals(password))
+                        correctAuth = true;
+                    }
+                    if (!correctAuth)
                     {
-                        // retrieve the value from the dictionary using the key.
-                        string userPass = UserList[username];
+                        Console.Clear();
+                        Console.WriteLine("No User found with that email and password.");
+                        Thread.Sleep(1700);
+                        continue;
+                    }
 
-                        // Check that the password matches the previously created username.
-                        if (userPass.Equals(password))
-                        {
+                    //// check if dictionary contains the key, then if the password is the same as the key.
+                    //if (UserList.ContainsKey(email))
+                    //{
+                    //    // retrieve the value from the dictionary using the key.
+                    //    string userPass = UserList[email];
+
+                    //    // Check that the password matches the previously created email.
+                    //    if (userPass.Equals(password))
+                    //    {
                         
-                            // ________________________________________________
-                            // TODO: ADD: <ORDER__HISTORY__GET__FROM__DATABASE>
-                            //_________________________________________________
+                    //        // ________________________________________________
+                    //        // TODO: ADD: <ORDER__HISTORY__GET__FROM__DATABASE>
+                    //        //_________________________________________________
 
-                            OrderHistory orderHistory = new OrderHistory();
-                            LOH.ChooseVewOrdersOrStorePortal(username, stores, orderHistory);
-                        }
+                    ///////////////// remove following line /////////////////////
+                    OrderHistory orderHistory = new OrderHistory();
 
-                        // Else return the prompt that they weren't found in the system.
-                        else
-                        {
-                            Console.WriteLine("An account isn't found with that username and password.");
-                        }
-                    }
-                    // Respond if the username wasn't found.  Using the same string as above to relay ambiguity
-                    // between whether it was the username or password that wasn't found.
-                    else
-                    {
-                        Console.WriteLine("An account isn't found with that username and password.");
-                    }
+                    LOH.ChooseVewOrdersOrStorePortal(email, stores, orderHistory, repo);
+                    //    }
+
+                    //    // Else return the prompt that they weren't found in the system.
+                    //    else
+                    //    {
+                    //        Console.WriteLine("An account isn't found with that email and password.");
+                    //    }
+                    //}
+                    // Respond if the email wasn't found.  Using the same string as above to relay ambiguity
+                    // between whether it was the email or password that wasn't found.
+                    //else
+                    //{
+                    //    Console.WriteLine("An account isn't found with that email and password.");
+                    //}
                     // allow loggin loop to continue;
                     choice = 0;
                 }
 
-                //ask for user to create new acount by giving a username and password 
+                //ask for user to create new acount by giving a email and password 
                 else if (choice == 2)
                 {
-                    // username
+                    // email - maps to username in the database
                     Console.Clear();
-                    Console.WriteLine(" ---- new username ---- ");
-                    string username = Console.ReadLine();
+                    Console.WriteLine(" ---- new email ---- ");
+                    string email = Console.ReadLine();
 
                     // password
-                    Console.Clear();
-                    Console.WriteLine(" ---- new password ----");
+                    Console.WriteLine("\n ---- create password ----");
                     string password = Console.ReadLine();
 
-                    // check if dictionary contains the key, then if the password is the same as the key.
-                    if (UserList.ContainsKey(username))
-                    {
-                        // retrieve the value from the dictionary using the key.
-                        string userPass = UserList[username];
+                    // First Name
+                    Console.WriteLine("\n ---- first name ----");
+                    string fname = Console.ReadLine();
 
-                        // Check that the password matches the previously created username.
-                        if (userPass.Equals(password))
-                        {
-                            Console.Clear();
-                            Console.WriteLine("An account already matches that username: would you like to try logging in?");
-                            Thread.Sleep(1000);
-                        }
+                    // Last Name
+                    Console.WriteLine("\n ---- last name ----");
+                    string lname = Console.ReadLine();
+
+                    // Phone Number
+                    Console.WriteLine("\n ---- Phone ----");
+                    string phone = Console.ReadLine();
+
+                    bool correctAuth = false;
+                    foreach (var Cx in customers)
+                    {
+                        if (Cx.Username!=null && Cx.Username.Equals(email))
+                            if (Cx.UserPass.Equals(password))
+                                correctAuth = true;
                     }
-                    // Respond if the username wasn't found.  Using the same string as above to relay ambiguity
-                    // between whether it was the username or password that wasn't found.
-                    else
+                    if (correctAuth)
                     {
                         Console.Clear();
-                        Console.WriteLine("Created your account! [{0}]", username);
-                        UserList.Add(username, password);
-                        Thread.Sleep(400);
+                        Console.WriteLine("Email already in use please sign in or use another email address.");
+                        Thread.Sleep(1700);
+                        continue;
                     }
+
+                    //// check if dictionary contains the key, then if the password is the same as the key.
+                    //if (UserList.ContainsKey(email))
+                    //{
+                    //    // retrieve the value from the dictionary using the key.
+                    //    string userPass = UserList[email];
+
+                    //    // Check that the password matches the previously created email.
+                    //    if (userPass.Equals(password))
+                    //    {
+                    //        Console.Clear();
+                    //        Console.WriteLine("An account already matches that email: would you like to try logging in?");
+                    //        Thread.Sleep(1000);
+                    //    }
+                    //}
+
+                    //// Respond if the email wasn't found.  Using the same string as above to relay ambiguity
+                    //// between whether it was the email or password that wasn't found.
+                    //else
+                    //{
+                        Console.Clear();
+                        Console.WriteLine("Created your account! [{0}]", email);
+
+                        
+
+                        Customer1 Cu = new Customer1()
+                        {
+                            Fname = fname,
+                            Lname = lname,
+                            Username = email,
+                            UserPass = password,
+                            Phone = Convert.ToInt32(phone)
+                        };
+
+                        repo.CreateCustomer(Cu);
+
+                        UserList.Add(email, password);
+                        Thread.Sleep(400);
+                    //}
                     // update choice to 0 to allow user to continue choosing.
                     choice = 0;
                 }

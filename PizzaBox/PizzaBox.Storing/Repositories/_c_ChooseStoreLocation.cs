@@ -42,7 +42,7 @@ namespace PizzaBox.Storing.Repositories
                     Console.WriteLine(" |");
                     storeCount++;
                 }
-                Console.WriteLine(" |0. :  sign out");
+                Console.WriteLine(" |0. : Return to previous page.");
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
                 {

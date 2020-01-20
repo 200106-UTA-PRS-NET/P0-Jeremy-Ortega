@@ -30,10 +30,11 @@ namespace PizzaBox.Storing.Repositories
             int inStoreChoice = -1;
             while (inStoreChoice != 0)
             {
-                
                 PLIH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+                Console.WriteLine(" |---------------------------------------------------------");
+                Console.WriteLine(" |...TODO: Add Order History / \"Your current order is empty...\"");
+                Console.WriteLine(" |---------------------------------------------------------");
                 Console.WriteLine(" | 1. : Order a Pizza.");
-                Console.WriteLine(" | 2. : Preview current order. ");
                 Console.WriteLine(" | 3. : Preview your history of orders at this location.");
                 Console.WriteLine(" | 0. : Return to Restaurant choice.");
                 Console.WriteLine(" |_________________________________________________________");

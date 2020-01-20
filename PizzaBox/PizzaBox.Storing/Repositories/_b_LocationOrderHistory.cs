@@ -16,7 +16,7 @@ namespace PizzaBox.Storing.Repositories
         }
 
 
-        public void ChooseVewOrdersOrStorePortal(string username, StoreRepo stores, OrderHistory orderHistory)
+        public void ChooseVewOrdersOrStorePortal(string username, StoreRepo stores, OrderHistory orderHistory, Abstractions.IRepositoryCustomer<Customer1> repo)
         {
 
             int signedInChoice = 0;
@@ -27,8 +27,8 @@ namespace PizzaBox.Storing.Repositories
                 Console.WriteLine(" | Hello:\t[" + username + "]");
                 Console.WriteLine(" |---------------------------------");
                 Console.WriteLine(" |1. Choose Location");
-                // Console.WriteLine(" |2. Look at my order history. "); ignore until rest of project finished
-                Console.WriteLine(" |2. sign out");
+                Console.WriteLine(" |2. Look at my complete order history. ");
+                Console.WriteLine(" |3. sign out");
                 Console.WriteLine(" |_________________________________");
                 if (!int.TryParse(Console.ReadLine(), out signedInChoice))
                 {
@@ -36,36 +36,33 @@ namespace PizzaBox.Storing.Repositories
                     signedInChoice = -1;
                     continue;
                 }
-                if (signedInChoice == 2)
-                {
-                    Console.WriteLine("Signing Out...");
-                    Thread.Sleep(1500);
-                    break;
-                }
-                if (signedInChoice == 3)
-                {
-
-                }
-
-                // Look at order history ignore functionality until rest of project is finished and maybe add at end
-                // for now we only want a Cx to access their orders once signed into a location.
-                /*
-                if (signedInChoice == 2)
-                {
-                    Console.Clear();
-                    Console.WriteLine(" __________________________________________________________");
-                    Console.WriteLine(" | Hello:\t[" + username + "]");
-                    Console.WriteLine(" |---------------------------------------------------------");
-                    Console.WriteLine(" | ... Order history ...");
-                    Console.WriteLine(" |_________________________________________________________");
-                }
-                */
-                /*
-                 * This choice signifies selecting the pizza parlor you wish to engage with 
-                 */
+                
+                //This choice signifies selecting the pizza parlor you wish to engage with 
                 if (signedInChoice == 1)
                 {
                     CSL.choosePizzaStoreLocation(username, stores, orderHistory);
+                }
+                // Show all order history
+                else if (signedInChoice == 2)
+                {
+                    if (signedInChoice == 2)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(" __________________________________________________________");
+                        Console.WriteLine(" | Hello:\t[" + username + "]");
+                        Console.WriteLine(" |---------------------------------------------------------");
+                        Console.WriteLine(" | ... Order history ...");
+                        Console.WriteLine(" |_________________________________________________________");
+                    }
+                    Console.WriteLine("...Still in progress");
+                    Thread.Sleep(1100);
+                }
+                // Sign out
+                else if (signedInChoice == 3)
+                {
+                    Console.WriteLine("Signing Out...");
+                    Thread.Sleep(1500);
+
                 }
             }
         }
