@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using PizzaBox.Domain;
 using System.Text;
 using System.Threading;
+using PizzaBox.Storing.TestModels;
 
 
 // TODO 70;
 
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class _a_SignIn
     {
@@ -21,7 +22,12 @@ namespace PizzaBox.Storing.Repositories
         /// <summary>
         /// Get through the sign in process.
         /// </summary>
-        public int SignInToAccount(Dictionary<string, string> UserList, Pizza pizza, StoreRepo stores, Abstractions.IRepositoryCustomer<Customer1> repo)
+        //public int SignInToAccount(Dictionary<string, string> UserList, Pizza pizza, StoreRepository stores,
+        public int SignInToAccount(
+            Abstractions.IRepositoryCustomer<Customer1> repo,
+            Abstractions.IRepositoryOrders<Order1> orderRepo,
+            Abstractions.IRepositoryPizza<Pizza1> pizzaRepo,
+            Abstractions.IRepositoryStore<Store1> storeRepo)
         {   
 
             var customers = repo.ReadInCustomer();
@@ -92,9 +98,11 @@ namespace PizzaBox.Storing.Repositories
                     //        //_________________________________________________
 
                     ///////////////// remove following line /////////////////////
-                    OrderHistory orderHistory = new OrderHistory();
+                    //OrderHistory orderHistory = new OrderHistory();
+                    //LOH.ChooseVewOrdersOrStorePortal(name, stores, orderHistory, repo, orderRepo);
 
-                    LOH.ChooseVewOrdersOrStorePortal(name, stores, orderHistory, repo);
+                    LOH.ChooseVewOrdersOrStorePortal(email, repo, orderRepo, pizzaRepo, storeRepo);
+
                     //    }
 
                     //    // Else return the prompt that they weren't found in the system.
@@ -151,7 +159,7 @@ namespace PizzaBox.Storing.Repositories
                         Thread.Sleep(1700);
                         continue;
                     }
-
+                    /*
                     //// check if dictionary contains the key, then if the password is the same as the key.
                     //if (UserList.ContainsKey(email))
                     //{
@@ -171,6 +179,7 @@ namespace PizzaBox.Storing.Repositories
                     //// between whether it was the email or password that wasn't found.
                     //else
                     //{
+                    */
                         Console.Clear();
                         Console.WriteLine("Created your account! [{0}]", email);
 
@@ -187,7 +196,7 @@ namespace PizzaBox.Storing.Repositories
 
                         repo.CreateCustomer(Cu);
 
-                        UserList.Add(email, password);
+                        //UserList.Add(email, password);
                         Thread.Sleep(400);
                     //}
                     // update choice to 0 to allow user to continue choosing.

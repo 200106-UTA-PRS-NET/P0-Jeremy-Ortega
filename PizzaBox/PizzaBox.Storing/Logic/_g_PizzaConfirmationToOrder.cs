@@ -2,8 +2,9 @@
 using PizzaBox.Domain;
 using System.Collections.Generic;
 using System.Text;
+using PizzaBox.Storing.Repositories;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class _g_PizzaConfirmationToOrder
     {
@@ -20,7 +21,7 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="locationChoice"></param>
         /// <param name="HawaiiPizza"></param>
         /// <returns></returns>
-        public bool PizzaConfirmToOrder(string username, StoreRepo stores, int locationChoice, Pizza PizzaChoice)
+        public bool PizzaConfirmToOrder(string username, StoreRepository stores, int locationChoice, Pizza PizzaChoice)
         {
             Console.WriteLine("CHECK");
             int confirm = -1;

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PizzaBox.Domain;
 using PizzaBox.Storing;
-using PizzaBox.Storing.Repositories;
+using PizzaBox.Storing.Logic;
 
 
 namespace PizzaBox.Client
@@ -25,16 +25,20 @@ namespace PizzaBox.Client
         public static void Main(string[] args)
         {
             // Initialize the main data structures going to be handling the pertinant selection data
-            StoreRepo stores = new StoreRepo();
-            Pizza pizza = new Pizza();
-            Dictionary<string, string> UserList = new Dictionary<string, string>();
+            //StoreRepository stores = new StoreRepository();
+            //Pizza pizza = new Pizza();
+            //Dictionary<string, string> UserList = new Dictionary<string, string>();
+            //int choice = SI.SignInToAccount(UserList, pizza, stores, CxRepo, orderRepo, pizzaRepo, storeRepo);
+
             _a_SignIn SI = new _a_SignIn();
             // Sign In 
 
             var CxRepo = Dependencies.CreateCustomerRepository();
-            // var customer = repo.ReadInCustomer();
+            var orderRepo = Dependencies.CreateOrderRepository();
+            var pizzaRepo = Dependencies.CreatePizzaRepository();
+            var storeRepo = Dependencies.CreatStoreRepository();
 
-            int choice = SI.SignInToAccount(UserList, pizza, stores, CxRepo);
+            int choice = SI.SignInToAccount(CxRepo, orderRepo, pizzaRepo, storeRepo);
 
             //Storing.Abstractions.IRepositoryCustomer<Customer1> repo
 

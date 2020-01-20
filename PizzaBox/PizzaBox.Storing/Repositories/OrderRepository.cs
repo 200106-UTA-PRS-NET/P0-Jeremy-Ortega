@@ -1,11 +1,13 @@
 ﻿using PizzaBox.Domain.Models;
 using PizzaBox.Storing.Abstractions;
+using PizzaBox.Storing.Mappings;
+using PizzaBox.Storing.TestModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PizzaBox.Storing
+namespace PizzaBox.Storing.Repositories
 {
     public class OrderRepository : IRepositoryOrders<Order1>
     {
@@ -36,17 +38,17 @@ namespace PizzaBox.Storing
 
         public void DeleteOrder(int Id)
         {
-            var Cus = PC.CxOrder.FirstOrDefault(Cx => Cx.Id == Id);
-            if (Cus.Id == Id)
-            {
-                PC.Remove(Cus);
-                PC.SaveChanges();
-            }
-            else
-            {
-                Console.WriteLine($"Cx with id {Id} doesn't exist");
-                return;
-            }
+            //var Cus = PC.CxOrder.FirstOrDefault(Cx => Cx.Id == Id);
+            //if (Cus.Id == Id)
+            //{
+            //    PC.Remove(Cus);
+            //    PC.SaveChanges();
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"Cx with id {Id} doesn't exist");
+            //    return;
+            //}
         }
 
         public IEnumerable<Order1> ReadInOrder()
@@ -59,13 +61,13 @@ namespace PizzaBox.Storing
 
         public void UpdateOrder(Order1 order)
         {
-            if (PC.order.Any(Cx => Cx.Id == order.Id))
-            {
-                var Cus = PC.order.FirstOrDefault(Cx => Cx.Id == order.Id);
-                Cus.Username = order.Fname;
-                PC.order.Update(Cus);
-                PC.SaveChanges();
-            }
+            //if (PC.Order.Any(Cx => Cx.Id == order.Id))
+            //{
+            //    var Cus = PC.order.FirstOrDefault(Cx => Cx.Id == order.Id);
+            //    Cus.Username = order.Fname;
+            //    PC.order.Update(Cus);
+            //    PC.SaveChanges();
+            //}
         }
     }
 }

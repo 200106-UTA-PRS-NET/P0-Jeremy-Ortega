@@ -3,8 +3,9 @@ using PizzaBox.Domain;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using PizzaBox.Storing.Repositories;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class CheckOut
     {
@@ -24,7 +25,7 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="LocationOrderHistory"></param>
         /// <param name="CurOrd"></param>
         /// <param name="stores"></param>
-        public void checkOutProcedure(string username, int locationChoice, OrderHistory LocationOrderHistory, CurrentOrder CurOrd, StoreRepo stores)
+        public void checkOutProcedure(string username, int locationChoice, OrderHistory LocationOrderHistory, CurrentOrder CurOrd, StoreRepository stores)
         {
             int checkOutOrAddAnother = -1;
             while (checkOutOrAddAnother != 1 && checkOutOrAddAnother != 2)

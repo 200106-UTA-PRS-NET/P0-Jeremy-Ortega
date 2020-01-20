@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaBox.Storing
+namespace PizzaBox.Storing.TestModels
 {
     public class Order1
     {

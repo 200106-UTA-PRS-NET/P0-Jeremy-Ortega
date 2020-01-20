@@ -1,6 +1,8 @@
 ﻿
 
-namespace PizzaBox.Storing
+using PizzaBox.Storing.TestModels;
+
+namespace PizzaBox.Storing.Mappings
 
 
 {

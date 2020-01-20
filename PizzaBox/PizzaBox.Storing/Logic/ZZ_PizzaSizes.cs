@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PizzaBox.Storing.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class ZZ_PizzaSizes
     {
@@ -18,7 +19,7 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="PizzaType"></param>
-        public void printPizzaSizeChoice(string username, StoreRepo stores, int locationChoice, string PizzaType)
+        public void printPizzaSizeChoice(string username, StoreRepository stores, int locationChoice, string PizzaType)
         {
             PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
             Console.WriteLine(" |  :: {0} ::  |", PizzaType);

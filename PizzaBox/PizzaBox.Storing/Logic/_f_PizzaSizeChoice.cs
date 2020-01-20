@@ -2,8 +2,9 @@
 using PizzaBox.Domain;
 using System.Collections.Generic;
 using System.Text;
+using PizzaBox.Storing.Repositories;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class _f_PizzaSizeChoice
     {
@@ -21,7 +22,7 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="locationChoice"></param>
         /// <param name="PresetPizza"></param>
         /// <param name="CurOrd"></param>
-        public void presetPizzaSizeChoice(string username, StoreRepo stores, int locationChoice, Pizza PresetPizza, CurrentOrder CurOrd)
+        public void presetPizzaSizeChoice(string username, StoreRepository stores, int locationChoice, Pizza PresetPizza, CurrentOrder CurOrd)
         {
             // Get price of pizza
             int sizeOfPizza = -1;
@@ -50,7 +51,7 @@ namespace PizzaBox.Storing.Repositories
                 if (PCTO.PizzaConfirmToOrder(username, stores, locationChoice, PresetPizza))
                 {
                     // Add The pizza to the order for this restaurant and user
-                    CurOrd.confirmPizzaOrder(PresetPizza, username, stores.currentStores[locationChoice - 1].storeName);
+                //    CurOrd.confirmPizzaOrder(PresetPizza, username, stores.currentStores[locationChoice - 1].storeName);
                     // currentOrder.EnterNewCompletedOrder(CurOrd);
                     sizeOfPizza = 0;
                 }

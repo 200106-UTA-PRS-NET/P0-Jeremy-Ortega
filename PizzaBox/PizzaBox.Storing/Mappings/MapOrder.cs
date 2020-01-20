@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PizzaBox.Storing.TestModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaBox.Storing
+namespace PizzaBox.Storing.Mappings
 {
     class MapOrder
     {

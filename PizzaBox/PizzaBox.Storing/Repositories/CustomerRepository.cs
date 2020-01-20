@@ -5,8 +5,9 @@ using PizzaBox.Domain.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PizzaBox.Storing.Abstractions;
+using PizzaBox.Storing.TestModels;
 
-namespace PizzaBox.Storing
+namespace PizzaBox.Storing.Repositories
 {
     /// <summary>
     /// This model was diaplayed and placed on github by Pushpinder Kaur. 
@@ -34,7 +35,7 @@ namespace PizzaBox.Storing
                 return;
             }
             else
-                PC.Customer.Add(Mapper.Map(customer));// this will generate insertMapper.Map(customer)
+                PC.Customer.Add(Mappings.Mapper.Map(customer));// this will generate insertMapper.Map(customer)
             PC.SaveChanges();// this will execute the above generate insert query
         }
 
@@ -56,7 +57,7 @@ namespace PizzaBox.Storing
         public IEnumerable<Customer1> ReadInCustomer()
         {
             var getCx = from cx in PC.Customer
-                        select Mapper.Map(cx);
+                        select Mappings.Mapper.Map(cx);
 
             return getCx;
         }

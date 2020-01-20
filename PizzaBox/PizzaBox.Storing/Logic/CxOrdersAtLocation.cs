@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using PizzaBox.Domain;
 using System.Text;
+using PizzaBox.Storing.Repositories;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class CxOrdersAtLocation
     {
@@ -19,7 +20,7 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="currentOrder"></param>
-        public void printCxPrevOrdersAtCurrLoc(string username, StoreRepo stores, int locationChoice,
+        public void printCxPrevOrdersAtCurrLoc(string username, StoreRepository stores, int locationChoice,
             OrderHistory LocationOrderHistory, CurrentOrder curOrd)
         {
             Console.Clear();

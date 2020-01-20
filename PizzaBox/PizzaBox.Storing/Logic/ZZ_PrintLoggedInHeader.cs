@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PizzaBox.Storing.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaBox.Storing.Repositories
+namespace PizzaBox.Storing.Logic
 {
     public class ZZ_PrintLoggedInHeader
     {
@@ -13,13 +14,13 @@ namespace PizzaBox.Storing.Repositories
         /// <param name="username"></param>
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
-        public void printStoreHeaderLoggedIn(string username, StoreRepo stores, int locationChoice)
+        public void printStoreHeaderLoggedIn(string username, string storeName)
         {
             Console.Clear();
             Console.WriteLine(" __________________________________________________________");
             Console.WriteLine(" | Hello:\t[" + username + "]");
             Console.WriteLine(" |---------------------------------------------------------");
-            Console.WriteLine(" | {0} |", stores.currentStores[locationChoice - 1].storeName);
+            Console.WriteLine($" | {storeName} |");
             Console.WriteLine(" |---------------------------------------------------------");
         }
     }
