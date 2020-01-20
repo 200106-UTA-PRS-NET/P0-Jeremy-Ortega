@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using PizzaBox.Storing.TestModels;
+using System.Linq;
 
 namespace PizzaBox.Storing.Logic
 {
@@ -61,17 +62,100 @@ namespace PizzaBox.Storing.Logic
                 // Pizza Size
                 if (inStoreChoice == 1)
                 {
-                   PMC.pizzaMakerChoice(username, stores, locationChoice, CurOrd, LocationOrderHistory);
+                   PMC.pizzaMakerChoice(username, storeName, curOrder, repo, orderRepo, pizzaRepo, storeRepo);
                 }
 
-                // This would be the second store
+                
                 if (inStoreChoice == 2)
                 {
-                    if (CurOrd.pizzasInOrder.Count == 0)
+                    if (curOrder.pizzasInOrder.Count == 0)
                     {
                         Console.Clear();
                         Console.WriteLine("No pizza's ordered yet!");
                         Console.ReadLine();
+                    }
+                    else
+                    {
+                        CxOrdersAtLocation Cx = new CxOrdersAtLocation();
+                        // give option for persistance 
+                        int num = Cx.printCxPrevOrdersAtCurrLoc(username, storeName, curOrder);  /////////
+                        if (num == 1) // try to read int choice
+                        {
+                            // Randomize and create new order.
+                            Random random = new Random();
+                            int OrderID = random.Next(1000000000, 2000000000);
+                            var cx = customer.FirstOrDefault(Cx => Cx.Username != null && Cx.Username.Equals(username));
+                            var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
+                            Order1 Or = new Order1(){
+                                CustId=cx.Id,
+                                OrderId = OrderID,
+                                StoreId=stor.Id
+                            };
+                            orderRepo.CreateOrder(Or);
+
+
+                            if (num == 1)
+                            {
+                                foreach (var pie in curOrder.pizzasInOrder)
+                                {
+                                    char[] tops = new char[5];
+                                    var top = pie.getChosenToppings();
+
+                                    if (top.Contains("sauce"))
+                                    {
+                                        tops[0] = '1';
+                                    }
+                                    else
+                                    {
+                                        tops[0] = '0';
+                                    }
+                                    if (top.Contains("cheese"))
+                                    {
+                                        tops[1] = '1';
+                                    }
+                                    else
+                                    {
+                                        tops[1] = '0';
+                                    }
+                                    if (top.Contains("pepperoni"))
+                                    {
+                                        tops[2] = '1';
+                                    }
+                                    else
+                                    {
+                                        tops[2] = '0';
+                                    }
+                                    if (top.Contains("sausage"))
+                                    {
+                                        tops[3] = '1';
+                                    }
+                                    else
+                                    {
+                                        tops[3] = '0';
+                                    }
+                                    if (top.Contains("pineapple"))
+                                    {
+                                        tops[4] = '1';
+                                    }
+                                    else
+                                    {
+                                        tops[4] = '0';
+                                    }
+
+
+                                    int topSet = BitFlagConversion.convertFlagArrayToInt(tops);
+                                    Pizza1 Cu = new Pizza1()
+                                    {
+                                        Toppings = topSet,
+                                        Crust = pie.getCrustChoice(),
+                                        Size = pie.getSizeChoice(),
+                                        OrderId = OrderID
+                                    };
+
+                                    pizzaRepo.CreatePizza(Cu);
+                                }
+                            }
+                        }
                     }
                 }
                 // Look at previous order history at current location

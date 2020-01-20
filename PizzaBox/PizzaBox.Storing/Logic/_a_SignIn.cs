@@ -82,42 +82,7 @@ namespace PizzaBox.Storing.Logic
                         Thread.Sleep(1700);
                         continue;
                     }
-
-                    //// check if dictionary contains the key, then if the password is the same as the key.
-                    //if (UserList.ContainsKey(email))
-                    //{
-                    //    // retrieve the value from the dictionary using the key.
-                    //    string userPass = UserList[email];
-
-                    //    // Check that the password matches the previously created email.
-                    //    if (userPass.Equals(password))
-                    //    {
-                        
-                    //        // ________________________________________________
-                    //        // TODO: ADD: <ORDER__HISTORY__GET__FROM__DATABASE>
-                    //        //_________________________________________________
-
-                    ///////////////// remove following line /////////////////////
-                    //OrderHistory orderHistory = new OrderHistory();
-                    //LOH.ChooseVewOrdersOrStorePortal(name, stores, orderHistory, repo, orderRepo);
-
                     LOH.ChooseVewOrdersOrStorePortal(email, repo, orderRepo, pizzaRepo, storeRepo);
-
-                    //    }
-
-                    //    // Else return the prompt that they weren't found in the system.
-                    //    else
-                    //    {
-                    //        Console.WriteLine("An account isn't found with that email and password.");
-                    //    }
-                    //}
-                    // Respond if the email wasn't found.  Using the same string as above to relay ambiguity
-                    // between whether it was the email or password that wasn't found.
-                    //else
-                    //{
-                    //    Console.WriteLine("An account isn't found with that email and password.");
-                    //}
-                    // allow loggin loop to continue;
                     choice = 0;
                 }
 
@@ -159,47 +124,20 @@ namespace PizzaBox.Storing.Logic
                         Thread.Sleep(1700);
                         continue;
                     }
-                    /*
-                    //// check if dictionary contains the key, then if the password is the same as the key.
-                    //if (UserList.ContainsKey(email))
-                    //{
-                    //    // retrieve the value from the dictionary using the key.
-                    //    string userPass = UserList[email];
+                    Console.Clear();
+                    Console.WriteLine("Created your account! [{0}]", email);
 
-                    //    // Check that the password matches the previously created email.
-                    //    if (userPass.Equals(password))
-                    //    {
-                    //        Console.Clear();
-                    //        Console.WriteLine("An account already matches that email: would you like to try logging in?");
-                    //        Thread.Sleep(1000);
-                    //    }
-                    //}
+                    Customer1 Cu = new Customer1()
+                    {
+                        Fname = fname,
+                        Lname = lname,
+                        Username = email,
+                        UserPass = password,
+                        Phone = Convert.ToInt32(phone)
+                    };
 
-                    //// Respond if the email wasn't found.  Using the same string as above to relay ambiguity
-                    //// between whether it was the email or password that wasn't found.
-                    //else
-                    //{
-                    */
-                        Console.Clear();
-                        Console.WriteLine("Created your account! [{0}]", email);
-
-                        
-
-                        Customer1 Cu = new Customer1()
-                        {
-                            Fname = fname,
-                            Lname = lname,
-                            Username = email,
-                            UserPass = password,
-                            Phone = Convert.ToInt32(phone)
-                        };
-
-                        repo.CreateCustomer(Cu);
-
-                        //UserList.Add(email, password);
-                        Thread.Sleep(400);
-                    //}
-                    // update choice to 0 to allow user to continue choosing.
+                    repo.CreateCustomer(Cu);
+                    Thread.Sleep(400);
                     choice = 0;
                 }
                 else if (choice == 0)

@@ -120,21 +120,21 @@ namespace PizzaBox.Domain
             crust = c;
         }
 
-        public string getSizeChoice()
+        public int getSizeChoice()
         {
             if(pizzaSize == PizzaSize.twelveInch)
             {
-                return "12 inch";
+                return 1;
             }
             else if (pizzaSize == PizzaSize.fifteenInch)
             {
-                return "15 inch";
+                return 2;
             }
             else if (pizzaSize == PizzaSize.twentyInch)
             {
-                return "20 inch";
+                return 3;
             }
-            return "";
+            return -1;
         }
 
 
@@ -142,21 +142,21 @@ namespace PizzaBox.Domain
         /// Retun the type of crust chosen
         /// </summary>
         /// <returns></returns>
-        public string getCrustChoice()
+        public int getCrustChoice()
         {
             if (crust == Crust.thin)
             {
-                return "thin";
+                return 1;
             }
             else if (crust == Crust.deepdish)
             {
-                return "deep dish";
+                return 2;
             }
             else if (crust == Crust.cheesefilled)
             {
-                return "cheesy";
+                return 3;
             }
-            return "";
+            return -1;
         }
 
 

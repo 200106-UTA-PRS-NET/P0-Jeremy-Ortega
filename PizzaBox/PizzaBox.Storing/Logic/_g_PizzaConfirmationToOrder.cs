@@ -21,16 +21,15 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="HawaiiPizza"></param>
         /// <returns></returns>
-        public bool PizzaConfirmToOrder(string username, StoreRepository stores, int locationChoice, Pizza PizzaChoice)
+        public bool PizzaConfirmToOrder(string username, string storeName, Pizza PizzaChoice)
         {
-            Console.WriteLine("CHECK");
             int confirm = -1;
             while (!(confirm >= 1 && confirm <= 2))
             {
-                PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+                PH.printStoreHeaderLoggedIn(username, storeName);
                 Console.WriteLine(" | %%% Price of pizza adding to order: ${0} %%%|", PizzaChoice.getPriceOfPizza());
                 Console.WriteLine(" |------------------------------");
-                Console.WriteLine(" |1. : Confirm Pizza order");
+                Console.WriteLine(" |1. : Confirm Pizza to order");
                 Console.WriteLine(" |2. : return to previous menu...");
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out confirm))

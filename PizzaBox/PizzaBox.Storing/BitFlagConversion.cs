@@ -14,7 +14,7 @@ namespace PizzaBox.Storing
         /// </summary>
         /// <param name="charArr"></param>
         /// <returns></returns>
-        public int convertFlagArrayToInt(char[] charArr)
+        public static int convertFlagArrayToInt(char[] charArr)
         {
             string str = new String(charArr);
             int Out = Convert.ToInt32(str, 2);

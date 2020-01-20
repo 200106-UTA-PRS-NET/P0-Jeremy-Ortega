@@ -20,11 +20,10 @@ namespace PizzaBox.Storing.Logic
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="currentOrder"></param>
-        public void printCxPrevOrdersAtCurrLoc(string username, StoreRepository stores, int locationChoice,
-            OrderHistory LocationOrderHistory, CurrentOrder curOrd)
+        public int printCxPrevOrdersAtCurrLoc(string username, string storeName, CurrentOrder curOrd)
         {
             Console.Clear();
-            PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+            PH.printStoreHeaderLoggedIn(username, storeName);
 
             // write each order Location
 
@@ -35,7 +34,6 @@ namespace PizzaBox.Storing.Logic
             int pizzaLineCounter = 1;
             foreach (Pizza pOrd in curOrd.pizzasInOrder)
             {
-
                 // give toppings
                 Console.Write(" |{0}: {1} {2} pizza with", pizzaLineCounter, pOrd.pizzaSize, pOrd.getCrustChoice());
                 List<string> tops = pOrd.getChosenToppings();
@@ -49,7 +47,18 @@ namespace PizzaBox.Storing.Logic
                 pizzaLineCounter++;
             }
             Console.WriteLine(" |_________________________________________________________\n");
-
+            Console.WriteLine("1.<accept>  2.<deny>");
+            
+            int res = -1;
+            while (res < 1 || res > 2)
+            {
+                if (!int.TryParse(Console.ReadLine(), out res)) // try to read int choice
+                {
+                    Console.WriteLine("Not an option");
+                    continue;
+                }
+            }
+            return res;
         }
     }
 }

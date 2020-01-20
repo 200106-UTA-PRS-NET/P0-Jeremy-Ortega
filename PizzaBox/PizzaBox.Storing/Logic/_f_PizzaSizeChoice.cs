@@ -22,7 +22,7 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="PresetPizza"></param>
         /// <param name="CurOrd"></param>
-        public void presetPizzaSizeChoice(string username, StoreRepository stores, int locationChoice, Pizza PresetPizza, CurrentOrder CurOrd)
+        public void presetPizzaSizeChoice(string username, string storeName, Pizza PresetPizza, CurrentOrder CurOrd)
         {
             // Get price of pizza
             int sizeOfPizza = -1;
@@ -46,13 +46,17 @@ namespace PizzaBox.Storing.Logic
                 {
                     PresetPizza.pizzaSize = Pizza.PizzaSize.twentyInch;
                 }
+                else
+                {
+                    sizeOfPizza = -1;
+                    continue;
+                }
 
                 // if user chooses to confirm then add order.
-                if (PCTO.PizzaConfirmToOrder(username, stores, locationChoice, PresetPizza))
+                if (PCTO.PizzaConfirmToOrder(username, storeName, PresetPizza))
                 {
                     // Add The pizza to the order for this restaurant and user
-                //    CurOrd.confirmPizzaOrder(PresetPizza, username, stores.currentStores[locationChoice - 1].storeName);
-                    // currentOrder.EnterNewCompletedOrder(CurOrd);
+                    CurOrd.confirmPizzaOrder(PresetPizza, username, storeName);
                     sizeOfPizza = 0;
                 }
             }

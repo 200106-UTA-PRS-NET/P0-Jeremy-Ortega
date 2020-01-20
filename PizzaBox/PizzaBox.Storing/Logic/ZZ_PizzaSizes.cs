@@ -19,9 +19,9 @@ namespace PizzaBox.Storing.Logic
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="PizzaType"></param>
-        public void printPizzaSizeChoice(string username, StoreRepository stores, int locationChoice, string PizzaType)
+        public void printPizzaSizeChoice(string username,string storeName, string PizzaType)
         {
-            PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+            PH.printStoreHeaderLoggedIn(username, storeName);
             Console.WriteLine(" |  :: {0} ::  |", PizzaType);
             Console.WriteLine(" |---------------------------------------------------------");
             Console.WriteLine(" | 1. : 12\"");

@@ -30,10 +30,10 @@ namespace PizzaBox.Storing.Logic
             int checkOutOrAddAnother = -1;
             while (checkOutOrAddAnother != 1 && checkOutOrAddAnother != 2)
             {
-                PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+                // PH.printStoreHeaderLoggedIn(username, stores);
                 Console.WriteLine(" | 1. : I'm ready to check out");
                 Console.WriteLine(" | 2. : Add another Pizza Already!");
-                COL.printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, LocationOrderHistory, CurOrd);
+                //COL.printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, LocationOrderHistory, CurOrd);
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
                 {

@@ -24,7 +24,7 @@ namespace PizzaBox.Storing.Logic
         /// <param name="username"></param>
         /// <param name="stores"></param>
         // public void choosePizzaStoreLocation(string username, StoreRepository stores, OrderHistory OrderHistory)
-        public void choosePizzaStoreLocation(string username, 
+        public void choosePizzaStoreLocation(string username,
             Abstractions.IRepositoryCustomer<Customer1> repo,
             Abstractions.IRepositoryOrders<Order1> orderRepo,
             Abstractions.IRepositoryPizza<Pizza1> pizzaRepo,
@@ -75,14 +75,12 @@ namespace PizzaBox.Storing.Logic
                     // Cx Customers current order selections.  Basically each pizza is a new "order" however
                     // It doesn't get it's persistance until checkout where The entire order gets the same order
                     // ID to resemble a full order consisting of one or many pizzas.
-                    OrderHistory LocationOrderHistory = new OrderHistory();
-                    CurrentOrder CurOrd = new CurrentOrder();
 
-                    
                     var Loc = store.FirstOrDefault(S => S.Id == locationChoice);
 
                     // Call Main logic for In Store.
-                    /// SPL.inStoreLogic(username, storename, locationChoice, CurOrd, LocationOrderHistory);
+                    SPL.inStoreLogic(username, Loc.StoreName, repo, orderRepo, pizzaRepo, storeRepo);
+
                     // SPL.inStoreLogic(username, Loc.StoreName, locationChoice, CurOrd, LocationOrderHistory);
                     Console.WriteLine("...In Progress");
                     Thread.Sleep(1500);

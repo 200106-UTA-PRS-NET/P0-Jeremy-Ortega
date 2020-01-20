@@ -41,7 +41,7 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" | Hello:\t[" + username + "]");
                 Console.WriteLine(" |---------------------------------");
                 Console.WriteLine(" |1. Choose Location");
-                Console.WriteLine(" |2. Look at my complete order history. ");
+                Console.WriteLine(" |2. Look at my complete order history Of All Pizza Restaurants. ");
                 Console.WriteLine(" |3. sign out");
                 Console.WriteLine(" |_________________________________");
                 if (!int.TryParse(Console.ReadLine(), out signedInChoice))
@@ -99,6 +99,7 @@ namespace PizzaBox.Storing.Logic
                                 {
                                     Console.Write(" <pineapple> ");
                                 }
+                                //Console.Write($"{pie}");
                             }
                             Console.WriteLine();
                         }
