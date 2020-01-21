@@ -87,18 +87,22 @@ namespace PizzaBox.Storing.Logic
                             var cx = customer.FirstOrDefault(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
                             var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
 
+                            double total = 0;
+                            foreach(var pi in curOrder.pizzasInOrder)
+                            {
+                                total += pi.getPriceOfPizza();
+                            }
                             Order1 Or = new Order1()
                             {
                                 CustId = cx.Id,
                                 OrderId = OrderID,
                                 StoreId = stor.Id,
-                                Price = 0
+                                Price = (decimal)total
                             };
                             orderRepo.CreateOrder(Or);
 
                             if (num == 1)
                             {
-                                double totalOrderPrice = 0;
                                 foreach (var pie in curOrder.pizzasInOrder)
                                 {
                                     char[] tops = new char[5];
@@ -145,7 +149,6 @@ namespace PizzaBox.Storing.Logic
                                         tops[4] = '0';
                                     }
 
-                                    totalOrderPrice += pie.getPriceOfPizza();
                                     int topSet = BitFlagConversion.convertFlagArrayToInt(tops);
                                     Pizza1 Cu = new Pizza1()
                                     {
