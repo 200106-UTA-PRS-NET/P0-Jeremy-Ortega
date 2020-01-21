@@ -116,7 +116,7 @@ namespace PizzaBox.Storing.Logic
                 else if (signedInChoice == 3)
                 {
                     Console.WriteLine("Signing Out...");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(500);
 
                 }
             }

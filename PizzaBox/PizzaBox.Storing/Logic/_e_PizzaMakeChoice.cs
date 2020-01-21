@@ -47,7 +47,7 @@ namespace PizzaBox.Storing.Logic
             int presetPizzaOptional = -1;
             while (presetPizzaOptional != 0)
             {
-              //  PH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+                PH.printStoreHeaderLoggedIn(username, storeName);
                 Console.WriteLine(" |  :: Choose Pizza Type ::");
                 Console.WriteLine(" | 1. : Hawaiian");
                 Console.WriteLine(" | 2. : Meat Lovers");
@@ -94,14 +94,6 @@ namespace PizzaBox.Storing.Logic
                     Pepperoni.addToppings(Pizza.Toppings.pepperoni);
                     Pepperoni.chooseCrust(Pizza.Crust.deepdish);
                     PSC.presetPizzaSizeChoice(username, storeName, Pepperoni, CurOrd);
-                }
-
-                // execute after choosing a pizza, This acts as a persisting layer to persist to a database hopefully.
-                if (presetPizzaOptional >= 1 && presetPizzaOptional <= 4)
-                {
-                    Console.WriteLine("...Need To Implement");
-                    Thread.Sleep(1200);
-                //    CO.checkOutProcedure(username, locationChoice, LocationOrderHistory, CurOrd, stores);
                 }
 
             }

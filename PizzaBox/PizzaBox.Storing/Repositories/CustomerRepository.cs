@@ -29,9 +29,9 @@ namespace PizzaBox.Storing.Repositories
 
         public void CreateCustomer(Customer1 customer)
         {
-            if (PC.Customer.Any(c => c.Phone == customer.Phone) || customer.Phone == null)
+            if (PC.Customer.Any(c => c.Email == customer.Email) || customer.Email == null)
             {
-                Console.WriteLine($"This customer with username {customer.Email} already exists and cannot be added");
+                Console.WriteLine($"This customer with email {customer.Email} already exists and cannot be added");
                 return;
             }
             else

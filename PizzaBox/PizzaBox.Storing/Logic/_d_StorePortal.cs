@@ -84,18 +84,21 @@ namespace PizzaBox.Storing.Logic
                             // Randomize and create new order.
                             Random random = new Random();
                             int OrderID = random.Next(1000000000, 2000000000);
-                            var cx = customer.FirstOrDefault(Cx => Cx.Email != null && Cx.Email.Equals(username));
+                            var cx = customer.FirstOrDefault(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
                             var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
-                            Order1 Or = new Order1(){
-                                CustId=cx.Id,
+
+                            Order1 Or = new Order1()
+                            {
+                                CustId = cx.Id,
                                 OrderId = OrderID,
-                                StoreId=stor.Id
+                                StoreId = stor.Id,
+                                Price = 0
                             };
                             orderRepo.CreateOrder(Or);
 
-
                             if (num == 1)
                             {
+                                double totalOrderPrice = 0;
                                 foreach (var pie in curOrder.pizzasInOrder)
                                 {
                                     char[] tops = new char[5];
@@ -142,16 +145,17 @@ namespace PizzaBox.Storing.Logic
                                         tops[4] = '0';
                                     }
 
-
+                                    totalOrderPrice += pie.getPriceOfPizza();
                                     int topSet = BitFlagConversion.convertFlagArrayToInt(tops);
                                     Pizza1 Cu = new Pizza1()
                                     {
+                                        PizzaId = random.Next(1000000000, 2000000000),
                                         Toppings = topSet,
                                         Crust = pie.getCrustChoice(),
                                         Size = pie.getSizeChoice(),
-                                        OrderId = OrderID
+                                        OrderId = OrderID,
+                                        Price = (decimal)pie.getPriceOfPizza()
                                     };
-
                                     pizzaRepo.CreatePizza(Cu);
                                 }
                             }

@@ -126,9 +126,10 @@ namespace PizzaBox.Storing.Logic
                     }
                     Console.Clear();
                     Console.WriteLine("Created your account! [{0}]", email);
-
+                    Random random = new Random();
                     Customer1 Cu = new Customer1()
                     {
+                        Id = random.Next(1000000000, 2000000000),
                         Fname = fname,
                         Lname = lname,
                         Email = email,
