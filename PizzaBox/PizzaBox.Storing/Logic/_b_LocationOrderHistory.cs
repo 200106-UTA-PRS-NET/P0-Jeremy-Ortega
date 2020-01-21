@@ -68,16 +68,19 @@ namespace PizzaBox.Storing.Logic
                     Console.WriteLine(" |---------------------------------------------------------");
                     Console.WriteLine(" | ... Order history ...");
 
-                    var Cus = customer.FirstOrDefault(Cx => Cx.Email.Equals(username));
+                    var Cus = customer.FirstOrDefault(Cx => Cx.Fname.Equals(username));
                     foreach (var Ord in order)
                     {
+                        int inOrder = 0;
                         foreach (var pie in pizza)
                         {
                             if (Cus.Id == Ord.CustId && pie.OrderId == Ord.OrderId)
                             {
-                                Console.WriteLine(" |-------------------------------------------------------");
-                                Console.WriteLine($" | Order: {Ord.OrderId} on Date {Ord.OrderDate}");
-                                Console.Write($" | {pie.Size} {pie.Crust} ");
+                                if (inOrder != pie.OrderId) {
+                                    Console.WriteLine(" |-------------------------------------------------------");
+                                    Console.WriteLine($" | Order: {Ord.OrderId} on Date {Ord.OrderDate}  Total Cost ${Ord.Price}");
+                                }
+                                Console.Write($" |    - {pie.Size} {pie.Crust} ");
                                 char[] tops = BFC.convertIntToFlagArray(pie.Toppings, 5);
                                 if(tops[0] == '1')
                                 {
@@ -99,16 +102,15 @@ namespace PizzaBox.Storing.Logic
                                 {
                                     Console.Write(" <pineapple> ");
                                 }
-                                //Console.Write($"{pie}");
+                                Console.WriteLine($" \t\t<${pie.Price}>");
+                                inOrder = pie.OrderId;
                             }
-                            Console.WriteLine();
                         }
-                        Console.WriteLine();
                     }
                     Console.WriteLine(" |_________________________________________________________");
 
-                    Console.WriteLine("...Still in progress");
-                    Thread.Sleep(1100);
+                    Console.WriteLine("...Press Any Key To Continue.");
+                    Console.ReadLine();
                 }
                 // Sign out
                 else if (signedInChoice == 3)
