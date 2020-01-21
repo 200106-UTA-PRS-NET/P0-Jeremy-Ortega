@@ -76,6 +76,7 @@ namespace PizzaBox.Storing.Logic
                     }
                     else
                     {
+                        inStoreChoice = 0; // trying to for customer back to store choice after checking out a pizza.
                         CxOrdersAtLocation Cx = new CxOrdersAtLocation();
                         // give option for persistance 
                         int num = Cx.printCxPrevOrdersAtCurrLoc(username, storeName, curOrder);  /////////
@@ -168,9 +169,8 @@ namespace PizzaBox.Storing.Logic
                 // Look at previous order history at current location
                 if (inStoreChoice == 3)
                 {
-                    OrderHistory StoresOrdHist = null;
                   //  StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                  //  PLIH.printStoreHeaderLoggedIn(username, stores, locationChoice);
+                    PLIH.printStoreHeaderLoggedIn(username, storeName);
                     Console.WriteLine(" |_________________________________________________________");
                     Console.WriteLine(" | ::Orders::");
                   //  StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);

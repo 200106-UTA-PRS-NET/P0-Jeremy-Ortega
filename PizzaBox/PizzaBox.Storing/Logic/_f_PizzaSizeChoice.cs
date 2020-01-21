@@ -55,6 +55,19 @@ namespace PizzaBox.Storing.Logic
                 // if user chooses to confirm then add order.
                 if (PCTO.PizzaConfirmToOrder(username, storeName, PresetPizza))
                 {
+                    double check = 0;
+                    foreach (var priceCheck in CurOrd.pizzasInOrder)
+                    {
+                        check += priceCheck.getPriceOfPizza();
+                    }
+                    if ((check + PresetPizza.getPriceOfPizza()) > 250)
+                    {
+                        Console.WriteLine("This pizza will push your maximum order limit.\n " +
+                            "Please check out at your earliest convenience. " +
+                            "<Press any key> to return to the previous page..");
+                        Console.ReadLine();
+                        break;
+                    }
                     // Add The pizza to the order for this restaurant and user
                     CurOrd.confirmPizzaOrder(PresetPizza, username, storeName);
                     sizeOfPizza = 0;

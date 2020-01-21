@@ -41,12 +41,10 @@ namespace PizzaBox.Storing.Logic
                     checkOutOrAddAnother = -1;
                     continue;
                 }
-
                 // Call method to print Cx Orders
                 if (checkOutOrAddAnother == 1)
                 {
                     LocationOrderHistory.EnterNewCompletedOrder(CurOrd);
-
                 }
                 else if (checkOutOrAddAnother == 2)
                 {

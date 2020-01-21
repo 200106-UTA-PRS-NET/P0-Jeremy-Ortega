@@ -95,7 +95,6 @@ namespace PizzaBox.Storing.Logic
                     Pepperoni.chooseCrust(Pizza.Crust.deepdish);
                     PSC.presetPizzaSizeChoice(username, storeName, Pepperoni, CurOrd);
                 }
-
             }
         }
     }

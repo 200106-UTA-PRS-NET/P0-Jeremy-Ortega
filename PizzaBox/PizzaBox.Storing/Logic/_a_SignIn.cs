@@ -79,7 +79,8 @@ namespace PizzaBox.Storing.Logic
                     {
                         Console.Clear();
                         Console.WriteLine("No User found with that email and password.");
-                        Thread.Sleep(1700);
+                        Thread.Sleep(1200);
+                        choice = -1;
                         continue;
                     }
                     LOH.ChooseVewOrdersOrStorePortal(name, repo, orderRepo, pizzaRepo, storeRepo);
@@ -120,8 +121,9 @@ namespace PizzaBox.Storing.Logic
                     if (correctAuth)
                     {
                         Console.Clear();
-                        Console.WriteLine("Email already in use please sign in or use another email address.");
-                        Thread.Sleep(1700);
+                        Console.WriteLine("Email already taken please sign in or use another email address.");
+                        Thread.Sleep(1500);
+                        choice = -1;
                         continue;
                     }
                     Console.Clear();
@@ -139,7 +141,7 @@ namespace PizzaBox.Storing.Logic
 
                     repo.CreateCustomer(Cu);
                     Thread.Sleep(400);
-                    choice = 0;
+                    choice = -1;
                 }
                 else if (choice == 0)
                 {
