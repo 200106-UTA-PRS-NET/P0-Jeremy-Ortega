@@ -37,13 +37,13 @@ namespace PizzaBox.Storing.Logic
             while (signedInChoice != 3)
             {
                 Console.Clear();
-                Console.WriteLine(" __________________________________");
+                Console.WriteLine(" _________________________________________________________________");
                 Console.WriteLine(" | Hello:\t[" + username + "]");
-                Console.WriteLine(" |---------------------------------");
+                Console.WriteLine(" |----------------------------------------------------------------");
                 Console.WriteLine(" |1. Choose Location");
                 Console.WriteLine(" |2. Look at my complete order history Of All Pizza Restaurants. ");
                 Console.WriteLine(" |3. sign out");
-                Console.WriteLine(" |_________________________________");
+                Console.WriteLine(" |________________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out signedInChoice))
                 {
                     Console.WriteLine("Not an int");

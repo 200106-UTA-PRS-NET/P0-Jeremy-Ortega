@@ -45,13 +45,13 @@ namespace PizzaBox.Domain
         {
             pizzaSize = PizzaSize.twelveInch;
             crust = Crust.thin;
-            defaultToppings();
+            //defaultToppings();
         }
 
         /// <summary>
         /// Pizza requires at least cheese and pepperoni
         /// </summary>
-        private void defaultToppings()
+        public void setDefaultToppings()
         {
             toppings = new List<Toppings>();
             toppings.Add(Toppings.cheese);

@@ -22,7 +22,7 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="PresetPizza"></param>
         /// <param name="CurOrd"></param>
-        public void presetPizzaSizeChoice(string username, string storeName, Pizza PresetPizza, CurrentOrder CurOrd)
+        public void presetPizzaSizeChoice(string username, string storeName, Pizza PresetPizza, CurrentOrder CurOrd, bool custom)
         {
             // Get price of pizza
             int sizeOfPizza = -1;
@@ -50,6 +50,10 @@ namespace PizzaBox.Storing.Logic
                 {
                     sizeOfPizza = -1;
                     continue;
+                }
+
+                if (custom)
+                {
                 }
 
                 // if user chooses to confirm then add order.

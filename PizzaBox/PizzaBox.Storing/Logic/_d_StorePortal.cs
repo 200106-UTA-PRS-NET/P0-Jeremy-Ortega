@@ -27,7 +27,7 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="CurOrd"></param>
         /// <param name="LocationOrderHistory"></param>
-        // public void inStoreLogic(string username, StoreRepository stores, int locationChoice, CurrentOrder CurOrd, OrderHistory LocationOrderHistory)
+        
         public void inStoreLogic(string username, string storeName,
             Abstractions.IRepositoryCustomer<Customer1> repo,
             Abstractions.IRepositoryOrders<Order1> orderRepo,
@@ -40,6 +40,7 @@ namespace PizzaBox.Storing.Logic
             var pizza = pizzaRepo.ReadInPizza();
             var store = storeRepo.ReadInStore();
 
+            // Create new order object to temporarily store the order before confirming it.
             CurrentOrder curOrder = new CurrentOrder();
             int inStoreChoice = -1;
             while (inStoreChoice != 0)
@@ -48,7 +49,7 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" |---------------------------------------------------------");
                 Console.WriteLine(" | 1. : Order a Pizza.");
                 Console.WriteLine(" | 2. : Preview Your Current Order.");
-                // Console.WriteLine(" | 3. : View your complete history of orders at this location.");    
+                Console.WriteLine(" | 3. : [ADMIN] Preview All Orders at this Location.");    
                 Console.WriteLine(" | 0. : Return to Restaurant choice.");
                 Console.WriteLine(" |_________________________________________________________");
 
@@ -170,13 +171,33 @@ namespace PizzaBox.Storing.Logic
                 // Look at previous order history at current location
                 if (inStoreChoice == 3)
                 {
-                  //  StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                    PLIH.printStoreHeaderLoggedIn(username, storeName);
-                    Console.WriteLine(" |_________________________________________________________");
-                    Console.WriteLine(" | ::Orders::");
-                  //  StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                    Console.WriteLine(" |_________________________________________________________");
-                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("Please Enter The Store Employee Passcode.");
+                    string passcode = Console.ReadLine();
+                    if (passcode != "cheesy")
+                    {
+                        Console.WriteLine("Incorrect Passcode. Press any key to continue.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        // StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
+                        PLIH.printStoreHeaderLoggedIn(username, storeName);
+                        Console.WriteLine(" | :: All Restaurant Orders::");
+                        Console.WriteLine(" |---------------------------------------------------------");
+                        Console.WriteLine(" | Order ID  |  Cx ID  |  Price  |  Date  |");
+                        Console.WriteLine(" |---------------------------------------------------------");
+                        var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
+                        foreach(var o in order)
+                        {
+                            if (o.StoreId == stor.Id)
+                            {
+                                Console.WriteLine($" | {o.OrderId} {o.CustId} {o.Price}\t{o.OrderDate}");
+                            }
+                        }
+                        Console.WriteLine(" |_________________________________________________________");
+                        Console.ReadLine();
+                    }
                 }
 
                 if (inStoreChoice == 0)
