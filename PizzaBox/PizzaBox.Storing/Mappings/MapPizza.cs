@@ -15,18 +15,20 @@ namespace PizzaBox.Storing.Mappings
                 OrderId = P.OrderId,
                 Toppings = P.Toppings,
                 Crust = P.Crust,
-                Size = P.Size
+                Size = P.Size,
+                Price = P.Price
             };
         }
         public static Domain.Models.Pizza Map(Pizza1 P)
         {
             return new Domain.Models.Pizza()
             {
-                PizzaId=P.PizzaId,
-                OrderId=P.OrderId,
-                Toppings=P.Toppings,
-                Crust=P.Crust,
-                Size=P.Size
+                PizzaId = P.PizzaId,
+                OrderId = P.OrderId,
+                Toppings = P.Toppings,
+                Crust = P.Crust,
+                Size = P.Size,
+                Price = P.Price
             };
         }
     }

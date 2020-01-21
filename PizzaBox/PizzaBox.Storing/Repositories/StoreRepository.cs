@@ -51,12 +51,12 @@ namespace PizzaBox.Storing.Repositories
 
         //}
 
-        Project0Context PC;
+        PizzaProjectContext PC;
         public StoreRepository()
         {
-            PC = new Project0Context();
+            PC = new PizzaProjectContext();
         }
-        public StoreRepository(Project0Context PC)
+        public StoreRepository(PizzaProjectContext PC)
         {
             // Directly taken from the aformentioned model by Pushpinder Kaur.
             this.PC = PC ?? throw new ArgumentNullException(nameof(PC));

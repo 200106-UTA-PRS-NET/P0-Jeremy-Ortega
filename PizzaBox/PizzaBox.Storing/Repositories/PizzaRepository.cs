@@ -11,12 +11,12 @@ namespace PizzaBox.Storing.Repositories
 {
     public class PizzaRepository : IRepositoryPizza<Pizza1>
     {
-        Project0Context PC;
+        PizzaProjectContext PC;
         public PizzaRepository()
         {
-            PC = new Project0Context();
+            PC = new PizzaProjectContext();
         }
-        public PizzaRepository(Project0Context PC)
+        public PizzaRepository(PizzaProjectContext PC)
         {
             // Directly taken from the aformentioned model by Pushpinder Kaur.
             this.PC = PC ?? throw new ArgumentNullException(nameof(PC));

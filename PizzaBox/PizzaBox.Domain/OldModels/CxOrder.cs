@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaBox.Domain.Models
+namespace PizzaBox.Domain.OldModels
 {
     public partial class CxOrder
     {
@@ -13,7 +13,6 @@ namespace PizzaBox.Domain.Models
         public int OrderId { get; set; }
         public int CustId { get; set; }
         public int StoreId { get; set; }
-        public decimal Price { get; set; }
         public DateTime? OrderDate { get; set; }
 
         public virtual Customer Cust { get; set; }

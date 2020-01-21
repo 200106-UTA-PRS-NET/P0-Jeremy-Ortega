@@ -66,7 +66,7 @@ namespace PizzaBox.Storing.Logic
                     string name = "";
                     bool correctAuth = false;
                     foreach (var Cx in customers){
-                        if (Cx.Username != null && Cx.Username.Equals(email))
+                        if (Cx.Email != null && Cx.Email.Equals(email))
                         {
                             if (Cx.UserPass.Equals(password))
                             {
@@ -82,7 +82,7 @@ namespace PizzaBox.Storing.Logic
                         Thread.Sleep(1700);
                         continue;
                     }
-                    LOH.ChooseVewOrdersOrStorePortal(email, repo, orderRepo, pizzaRepo, storeRepo);
+                    LOH.ChooseVewOrdersOrStorePortal(name, repo, orderRepo, pizzaRepo, storeRepo);
                     choice = 0;
                 }
 
@@ -113,7 +113,7 @@ namespace PizzaBox.Storing.Logic
                     bool correctAuth = false;
                     foreach (var Cx in customers)
                     {
-                        if (Cx.Username!=null && Cx.Username.Equals(email))
+                        if (Cx.Email!=null && Cx.Email.Equals(email))
                             if (Cx.UserPass.Equals(password))
                                 correctAuth = true;
                     }
@@ -131,7 +131,7 @@ namespace PizzaBox.Storing.Logic
                     {
                         Fname = fname,
                         Lname = lname,
-                        Username = email,
+                        Email = email,
                         UserPass = password,
                         Phone = Convert.ToInt32(phone)
                     };

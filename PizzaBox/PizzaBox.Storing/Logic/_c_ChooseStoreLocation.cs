@@ -48,13 +48,15 @@ namespace PizzaBox.Storing.Logic
 
 
                 // read through the list of Pizza parlors available.
+                Dictionary<int, int> LocChoice = new Dictionary<int, int>();
                 int storeCount = 0;
                 foreach (var s in store)
                 {
                     storeCount++;
-                    Console.WriteLine($" |{s.Id}. :  {s.StoreName}");
+                    Console.WriteLine($" |{storeCount}. :  {s.StoreName}");
                     Console.WriteLine($" |        {s.StoreLocation}");
                     Console.WriteLine(" |");
+                    LocChoice.Add(storeCount, s.Id);
                 }
                 Console.WriteLine(" |0. : Return to previous page.");
                 Console.WriteLine(" |_________________________________________________________");
@@ -76,7 +78,7 @@ namespace PizzaBox.Storing.Logic
                     // It doesn't get it's persistance until checkout where The entire order gets the same order
                     // ID to resemble a full order consisting of one or many pizzas.
 
-                    var Loc = store.FirstOrDefault(S => S.Id == locationChoice);
+                    var Loc = store.FirstOrDefault(S => S.Id == LocChoice[locationChoice]);
 
                     // Call Main logic for In Store.
                     SPL.inStoreLogic(username, Loc.StoreName, repo, orderRepo, pizzaRepo, storeRepo);

@@ -68,7 +68,7 @@ namespace PizzaBox.Storing.Logic
                     Console.WriteLine(" |---------------------------------------------------------");
                     Console.WriteLine(" | ... Order history ...");
 
-                    var Cus = customer.FirstOrDefault(Cx => Cx.Username.Equals(username));
+                    var Cus = customer.FirstOrDefault(Cx => Cx.Email.Equals(username));
                     foreach (var Ord in order)
                     {
                         foreach (var pie in pizza)

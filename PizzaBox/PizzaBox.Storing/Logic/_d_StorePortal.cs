@@ -84,7 +84,7 @@ namespace PizzaBox.Storing.Logic
                             // Randomize and create new order.
                             Random random = new Random();
                             int OrderID = random.Next(1000000000, 2000000000);
-                            var cx = customer.FirstOrDefault(Cx => Cx.Username != null && Cx.Username.Equals(username));
+                            var cx = customer.FirstOrDefault(Cx => Cx.Email != null && Cx.Email.Equals(username));
                             var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
                             Order1 Or = new Order1(){
                                 CustId=cx.Id,

@@ -9,6 +9,7 @@ namespace PizzaBox.Storing.TestModels
         public int OrderId { get; set; }
         public int CustId { get; set; }
         public int StoreId { get; set; }
+        public decimal Price { get; set; }
         public DateTime? OrderDate { get; set; }
     }
 }

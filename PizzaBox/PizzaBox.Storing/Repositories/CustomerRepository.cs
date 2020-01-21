@@ -14,12 +14,12 @@ namespace PizzaBox.Storing.Repositories
     /// </summary>
     public class CustomerRepository : IRepositoryCustomer<Customer1>
     {
-        Project0Context PC;
+        PizzaProjectContext PC;
         public CustomerRepository()
         {
-            PC = new Project0Context();
+            PC = new PizzaProjectContext();
         }
-        public CustomerRepository(Project0Context PC)
+        public CustomerRepository(PizzaProjectContext PC)
         {
             // Directly taken from the aformentioned model by Pushpinder Kaur.
             this.PC = PC ?? throw new ArgumentNullException(nameof(PC));
@@ -31,7 +31,7 @@ namespace PizzaBox.Storing.Repositories
         {
             if (PC.Customer.Any(c => c.Phone == customer.Phone) || customer.Phone == null)
             {
-                Console.WriteLine($"This customer with username {customer.Username} already exists and cannot be added");
+                Console.WriteLine($"This customer with username {customer.Email} already exists and cannot be added");
                 return;
             }
             else
@@ -67,7 +67,7 @@ namespace PizzaBox.Storing.Repositories
             if(PC.Customer.Any(Cx => Cx.Id == Customer.Id))
             {
                 var Cus = PC.Customer.FirstOrDefault(Cx => Cx.Id == Customer.Id);
-                Cus.Username = Customer.Fname;
+                Cus.Fname = Customer.Fname;
                 PC.Customer.Update(Cus);
                 PC.SaveChanges();
             }

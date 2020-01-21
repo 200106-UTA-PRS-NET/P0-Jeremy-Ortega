@@ -15,7 +15,7 @@ namespace PizzaBox.Storing.Mappings
                 Id = Cx.Id,
                 Fname = Cx.Fname,
                 Lname = Cx.Lname,
-                Username = Cx.Username,
+                Email = Cx.Email,
                 UserPass = Cx.UserPass,
                 Phone = Cx.Phone
             };
@@ -27,7 +27,7 @@ namespace PizzaBox.Storing.Mappings
                 Id=Cx.Id,
                 Fname=Cx.Fname,
                 Lname=Cx.Lname,
-                Username=Cx.Username,
+                Email=Cx.Email,
                 UserPass=Cx.UserPass,
                 Phone=Cx.Phone
             };

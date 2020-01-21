@@ -142,21 +142,21 @@ namespace PizzaBox.Domain
         /// Retun the type of crust chosen
         /// </summary>
         /// <returns></returns>
-        public int getCrustChoice()
+        public string getCrustChoice()
         {
             if (crust == Crust.thin)
             {
-                return 1;
+                return "thin";
             }
             else if (crust == Crust.deepdish)
             {
-                return 2;
+                return "deepdish";
             }
             else if (crust == Crust.cheesefilled)
             {
-                return 3;
+                return "cheesecrust";
             }
-            return -1;
+            return ";)";
         }
 
 

@@ -14,6 +14,7 @@ namespace PizzaBox.Storing.Mappings
                 OrderId = Cx.OrderId,
                 CustId = Cx.CustId,
                 StoreId = Cx.StoreId,
+                Price = Cx.Price,
                 OrderDate = Cx.OrderDate
             };
         }
@@ -24,6 +25,7 @@ namespace PizzaBox.Storing.Mappings
                 OrderId = Cx.OrderId,
                 CustId = Cx.CustId,
                 StoreId = Cx.StoreId,
+                Price = Cx.Price,
                 OrderDate = Cx.OrderDate
             };
         }
