@@ -48,7 +48,7 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" |---------------------------------------------------------");
                 Console.WriteLine(" | 1. : Order a Pizza.");
                 Console.WriteLine(" | 2. : Preview Your Current Order.");
-                Console.WriteLine(" | 3. : View your complete history of orders at this location.");    
+                // Console.WriteLine(" | 3. : View your complete history of orders at this location.");    
                 Console.WriteLine(" | 0. : Return to Restaurant choice.");
                 Console.WriteLine(" |_________________________________________________________");
 
@@ -64,8 +64,7 @@ namespace PizzaBox.Storing.Logic
                 {
                    PMC.pizzaMakerChoice(username, storeName, curOrder, repo, orderRepo, pizzaRepo, storeRepo);
                 }
-
-                
+   
                 if (inStoreChoice == 2)
                 {
                     if (curOrder.pizzasInOrder.Count == 0)
@@ -88,11 +87,14 @@ namespace PizzaBox.Storing.Logic
                             var cx = customer.FirstOrDefault(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
                             var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
 
+                            // Tally the complete order first to get the total.
                             double total = 0;
                             foreach(var pi in curOrder.pizzasInOrder)
                             {
                                 total += pi.getPriceOfPizza();
                             }
+
+                            // Create new order and submit.
                             Order1 Or = new Order1()
                             {
                                 CustId = cx.Id,
@@ -102,66 +104,65 @@ namespace PizzaBox.Storing.Logic
                             };
                             orderRepo.CreateOrder(Or);
 
-                            if (num == 1)
+                            foreach (var pie in curOrder.pizzasInOrder)
                             {
-                                foreach (var pie in curOrder.pizzasInOrder)
+                                char[] tops = new char[5];
+                                var top = pie.getChosenToppings();
+
+                                if (top.Contains("sauce"))
                                 {
-                                    char[] tops = new char[5];
-                                    var top = pie.getChosenToppings();
-
-                                    if (top.Contains("sauce"))
-                                    {
-                                        tops[0] = '1';
-                                    }
-                                    else
-                                    {
-                                        tops[0] = '0';
-                                    }
-                                    if (top.Contains("cheese"))
-                                    {
-                                        tops[1] = '1';
-                                    }
-                                    else
-                                    {
-                                        tops[1] = '0';
-                                    }
-                                    if (top.Contains("pepperoni"))
-                                    {
-                                        tops[2] = '1';
-                                    }
-                                    else
-                                    {
-                                        tops[2] = '0';
-                                    }
-                                    if (top.Contains("sausage"))
-                                    {
-                                        tops[3] = '1';
-                                    }
-                                    else
-                                    {
-                                        tops[3] = '0';
-                                    }
-                                    if (top.Contains("pineapple"))
-                                    {
-                                        tops[4] = '1';
-                                    }
-                                    else
-                                    {
-                                        tops[4] = '0';
-                                    }
-
-                                    int topSet = BitFlagConversion.convertFlagArrayToInt(tops);
-                                    Pizza1 Cu = new Pizza1()
-                                    {
-                                        PizzaId = random.Next(1000000000, 2000000000),
-                                        Toppings = topSet,
-                                        Crust = pie.getCrustChoice(),
-                                        Size = pie.getSizeChoice(),
-                                        OrderId = OrderID,
-                                        Price = (decimal)pie.getPriceOfPizza()
-                                    };
-                                    pizzaRepo.CreatePizza(Cu);
+                                    tops[0] = '1';
                                 }
+                                else
+                                {
+                                    tops[0] = '0';
+                                }
+                                if (top.Contains("cheese"))
+                                {
+                                    tops[1] = '1';
+                                }
+                                else
+                                {
+                                    tops[1] = '0';
+                                }
+                                if (top.Contains("pepperoni"))
+                                {
+                                    tops[2] = '1';
+                                }
+                                else
+                                {
+                                    tops[2] = '0';
+                                }
+                                if (top.Contains("sausage"))
+                                {
+                                    tops[3] = '1';
+                                }
+                                else
+                                {
+                                    tops[3] = '0';
+                                }
+                                if (top.Contains("pineapple"))
+                                {
+                                    tops[4] = '1';
+                                }
+                                else
+                                {
+                                    tops[4] = '0';
+                                }
+
+                                // Convert toppings int a singular decimal representing a bit flag 
+                                int topSet = BitFlagConversion.convertFlagArrayToInt(tops);
+                                Pizza1 Cu = new Pizza1()
+                                {
+                                    PizzaId = random.Next(1000000000, 2000000000),
+                                    Toppings = topSet,
+                                    Crust = pie.getCrustChoice(),
+                                    Size = pie.getSizeChoice(),
+                                    OrderId = OrderID,
+                                    Price = (decimal)pie.getPriceOfPizza()
+                                };
+                                pizzaRepo.CreatePizza(Cu);
+
                             }
                         }
                     }
