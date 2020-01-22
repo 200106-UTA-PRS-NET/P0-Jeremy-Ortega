@@ -43,6 +43,7 @@ namespace PizzaBox.Domain
         /// </summary>
         public Pizza()
         {
+            toppings = new List<Toppings>();
             pizzaSize = PizzaSize.twelveInch;
             crust = Crust.thin;
             //defaultToppings();
@@ -65,7 +66,7 @@ namespace PizzaBox.Domain
         /// <param name="top"></param>
         public void addToppings(Toppings top)
         {
-            if (toppings.Count >= 5)
+            if (toppings.Count > 5)
             {
                 Console.WriteLine("Topping Limit is reached");
             }
@@ -85,7 +86,7 @@ namespace PizzaBox.Domain
             foreach (Toppings top in toppings)
             {
                 string strTop = "";
-                if(top == Toppings.cheese)
+                if (top == Toppings.cheese)
                 {
                     strTop = "cheese";
                 }

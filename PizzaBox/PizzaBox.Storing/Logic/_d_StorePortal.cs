@@ -163,7 +163,6 @@ namespace PizzaBox.Storing.Logic
                                     Price = (decimal)pie.getPriceOfPizza()
                                 };
                                 pizzaRepo.CreatePizza(Cu);
-
                             }
                         }
                     }

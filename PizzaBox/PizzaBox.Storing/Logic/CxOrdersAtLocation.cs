@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PizzaBox.Domain;
 using System.Text;
 using PizzaBox.Storing.Repositories;
+using System.Threading;
 
 namespace PizzaBox.Storing.Logic
 {
@@ -55,7 +56,8 @@ namespace PizzaBox.Storing.Logic
                 if (!int.TryParse(Console.ReadLine(), out res)) // try to read int choice
                 {
                     Console.WriteLine("Not an option");
-                    continue;
+                    Thread.Sleep(1000);
+                    res = -1;
                 }
             }
             return res;
