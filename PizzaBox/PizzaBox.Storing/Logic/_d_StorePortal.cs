@@ -187,7 +187,7 @@ namespace PizzaBox.Storing.Logic
                         Console.WriteLine(" | Order ID  |  Cx ID  |  Price  |  Date  |");
                         Console.WriteLine(" |---------------------------------------------------------");
                         var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
-                        foreach(var o in order)
+                        foreach (var o in order)
                         {
                             if (o.StoreId == stor.Id)
                             {

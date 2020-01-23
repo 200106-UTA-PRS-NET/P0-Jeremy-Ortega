@@ -35,7 +35,7 @@ namespace PizzaBox.Storing.Logic
             
 
             int choice = -1;
-            while (!(choice >= 1 && choice <= 3))
+            while (!(choice >= 1 && choice <= 2))
             {
                 Console.Clear();
                 Console.WriteLine(" __________________________________");
@@ -67,7 +67,10 @@ namespace PizzaBox.Storing.Logic
                         quit = email;
                         mxEmail = Regex.Match(email, emailChk);
                     }
-                    if (quit.Equals("quit")) { continue; }
+                    if (quit.Equals("quit")) {
+                        choice = -1;
+                        continue; 
+                    }
                 
 
                     // password
@@ -84,7 +87,7 @@ namespace PizzaBox.Storing.Logic
                         quit = password;
                         rxPass = Regex.Match(password, passCheck);
                     }
-                    if (quit.Equals("quit")) { continue; }
+                    if (quit.Equals("quit")) { choice = -1; continue; }
 
                     string name = "";
                     bool correctAuth = false;
@@ -127,7 +130,7 @@ namespace PizzaBox.Storing.Logic
                         quit = email;
                         mxEmail = Regex.Match(email, emailChk);
                     }
-                    if (quit.Equals("quit")) { break; }
+                    if (quit.Equals("quit")) { choice = -1; break; }
 
                     // password
                     string passCheck = @"^[a-zA-Z0-9_]{1,15}$";
@@ -143,7 +146,7 @@ namespace PizzaBox.Storing.Logic
                         quit = password;
                         rxPass = Regex.Match(password, passCheck);
                     }
-                    if (quit.Equals("quit")) { break; }
+                    if (quit.Equals("quit")) { choice = -1; break; }
 
 
                     string namePattern = @"^[a-zA-Z]{1,15}$";
@@ -159,7 +162,7 @@ namespace PizzaBox.Storing.Logic
                         quit = fname;
                         rxFname = Regex.Match(fname, namePattern);
                     }
-                    if (quit.Equals("quit")) { break; }
+                    if (quit.Equals("quit")) { choice = -1; break; }
 
                     // phone pattern complete
                     Match rxLname = Regex.Match("", namePattern);
@@ -173,7 +176,7 @@ namespace PizzaBox.Storing.Logic
                         quit = lname;
                         rxLname = Regex.Match(lname, namePattern);
                     }
-                    if (quit.Equals("quit")) { break; }
+                    if (quit.Equals("quit")) { choice = -1; break; }
 
                     // phone pattern complete
                     string phonePattern = @"^[0-9]{3}[\-]?[0-9]{3}[\-]?[0-9]{4}$";
@@ -183,15 +186,22 @@ namespace PizzaBox.Storing.Logic
                     {
                         // Phone Number
                         Console.Clear();
-                        Console.WriteLine("\n ---- Phone ----");
+                        Console.WriteLine("\n ---- Phone 9 digits not starting with 0 ----");
                         phone = Console.ReadLine();
                         rxPhone = Regex.Match(phone, phonePattern);
+
+                        /////////////// Fix Phone bug - remove string '-' from string
+                        phone = Regex.Replace(phone, "[/-]", "");
+                        if (phone.StartsWith("0"))
+                        {
+                            rxPhone = Regex.Match("123", phonePattern);
+                        }
                     }
-                    if (quit.Equals("quit")) { break; }
 
 
-
-                    ///////////////////////////////////////
+                    /////////////// Fix Phone bug - remove string '-' from string
+                    phone = Regex.Replace(phone, "[/-]", "");
+                   
 
                     bool correctAuth = false;
                     foreach (var Cx in customers)
@@ -218,7 +228,7 @@ namespace PizzaBox.Storing.Logic
                         Lname = lname,
                         Email = email,
                         UserPass = password,
-                        Phone = Convert.ToInt32(phone)
+                        Phone = Convert.ToInt64(phone)
                     };
 
                     repo.CreateCustomer(Cu);

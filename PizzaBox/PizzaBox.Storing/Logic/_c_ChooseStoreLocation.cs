@@ -91,8 +91,7 @@ namespace PizzaBox.Storing.Logic
                         }
                         else
                         {
-                            Console.WriteLine($"Yes visited and time {time}hrs ago");
-                            Console.WriteLine($" | Wait 24 hours before ordering from \"{s.StoreName}\" again.");
+                            Console.WriteLine($" | Plese wait 24 hours before ordering from \"{s.StoreName}\" again.");
                             Console.WriteLine($" | \t - You have {Math.Round((24 - time), 2)} hours remaining.");
                             Console.WriteLine(" |");
                         }

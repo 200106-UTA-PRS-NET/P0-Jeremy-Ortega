@@ -63,9 +63,9 @@ namespace PizzaBox.Storing.Logic
                 {
                     BitFlagConversion BFC = new BitFlagConversion();
                     Console.Clear();
-                    Console.WriteLine(" __________________________________________________________");
+                    Console.WriteLine(" ____________________________________________________________________________");
                     Console.WriteLine(" | Hello:\t[" + username + "]");
-                    Console.WriteLine(" |---------------------------------------------------------");
+                    Console.WriteLine(" |---------------------------------------------------------------------------");
                     Console.WriteLine(" | ... Order history ...");
 
                     var Cus = customer.FirstOrDefault(Cx => Cx.Fname.Equals(username));
@@ -77,12 +77,12 @@ namespace PizzaBox.Storing.Logic
                             if (Cus.Id == Ord.CustId && pie.OrderId == Ord.OrderId)
                             {
                                 if (inOrder != pie.OrderId) {
-                                    Console.WriteLine(" |-------------------------------------------------------");
+                                    Console.WriteLine(" |---------------------------------------------------------------------------");
                                     Console.WriteLine($" | Order: {Ord.OrderId} on Date {Ord.OrderDate}  Total Cost ${Ord.Price}");
                                 }
-                                Console.Write($" |    - {pie.Size} {pie.Crust} ");
+                                Console.Write($" |     <${pie.Price}> :: {pie.Size}inch {pie.Crust} ");
                                 char[] tops = BFC.convertIntToFlagArray(pie.Toppings, 5);
-                                if(tops[0] == '1')
+                                if (tops[0] == '1')
                                 {
                                     Console.Write(" <sauce> ");
                                 }
@@ -102,12 +102,13 @@ namespace PizzaBox.Storing.Logic
                                 {
                                     Console.Write(" <pineapple> ");
                                 }
-                                Console.WriteLine($" \t\t<${pie.Price}>");
+                                Console.WriteLine();
+                                // Console.WriteLine($" \t\t<${pie.Price}>");
                                 inOrder = pie.OrderId;
                             }
                         }
                     }
-                    Console.WriteLine(" |_________________________________________________________");
+                    Console.WriteLine(" |___________________________________________________________________________");
 
                     Console.WriteLine("...Press Any Key To Continue.");
                     Console.ReadLine();
