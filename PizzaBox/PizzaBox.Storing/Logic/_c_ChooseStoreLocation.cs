@@ -55,27 +55,34 @@ namespace PizzaBox.Storing.Logic
                     //////
                     bool visitedStore = false;
                     var Cus = customer.FirstOrDefault(Cx => Cx.Fname.Equals(username));
+                    ///
                     DateTime dt = DateTime.Now;
-                    TimeSpan ts = new TimeSpan();
-
+                    double time = 25;
+                    double date2 = 25;
+                    //DateTime date; // just chckng
                     foreach (var Ord in order)
                     {
                         if (Cus.Id == Ord.CustId && Ord.StoreId == s.Id)
                         {
                             visitedStore = true;
                             TimeSpan ts2 = (TimeSpan)(dt - Ord.OrderDate);
-                            if (ts == null || ts2 > ts)
+                            date2 = ts2.TotalMinutes / 60;
+                            if (date2 < time)
                             {
-                                ts = ts2;
+                                time = date2;
                             }
+                            //Console.WriteLine($"{Cus.Fname} : {s.StoreName} : {Ord.OrderDate} : {ts2}");
                         }
+                        //Console.WriteLine($"{Cus.Fname} : {s.StoreName} : {Ord.OrderDate} : {ts2}");
                     }
                     if (visitedStore)
                     {
-                        double time = ts.TotalMinutes / 60;
+                        //Console.WriteLine("visited!");
+                        //double time = ts.TotalMinutes / 60;
 
                         if (time >= 24)
                         {
+                            //Console.WriteLine($"Yes visited and time {time}hrs ago");
                             storeCount++;
                             Console.WriteLine($" |{storeCount}. :  {s.StoreName}");
                             Console.WriteLine($" |        {s.StoreLocation}");
@@ -84,6 +91,7 @@ namespace PizzaBox.Storing.Logic
                         }
                         else
                         {
+                            Console.WriteLine($"Yes visited and time {time}hrs ago");
                             Console.WriteLine($" | Wait 24 hours before ordering from \"{s.StoreName}\" again.");
                             Console.WriteLine($" | \t - You have {Math.Round((24 - time), 2)} hours remaining.");
                             Console.WriteLine(" |");
@@ -125,7 +133,7 @@ namespace PizzaBox.Storing.Logic
 
                     // SPL.inStoreLogic(username, Loc.StoreName, locationChoice, CurOrd, LocationOrderHistory);
                     Console.WriteLine("...In Progress");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(1100);
                 }
 
                 if (locationChoice == 0)

@@ -4,6 +4,7 @@ using PizzaBox.Domain;
 using System.Text;
 using System.Threading;
 using PizzaBox.Storing.TestModels;
+using System.Text.RegularExpressions;
 
 
 // TODO 70;
@@ -52,20 +53,42 @@ namespace PizzaBox.Storing.Logic
                 //ask for user name and password of a previously created account 
                 if (choice == 1)
                 {
+                    string quit = "";
 
-                    // email
-                    Console.Clear();
-                    Console.WriteLine(" ---- email ----");
-                    string email = Console.ReadLine();
+                    string emailChk = @"^[a-zA-Z0-9_]{1,15}[@][a-zA-Z0-9_]{1,15}[.][a-zA-Z]{2,3}$";
+                    Match mxEmail = Regex.Match("", emailChk);
+                    string email = "";
+                    while (!mxEmail.Success && !quit.Equals("quit"))
+                    {
+                        // Email
+                        Console.Clear();
+                        Console.WriteLine("\n  ---- email ---- \"quit\" to return");
+                        email = Console.ReadLine();
+                        quit = email;
+                        mxEmail = Regex.Match(email, emailChk);
+                    }
+                    if (quit.Equals("quit")) { continue; }
+                
 
                     // password
-                    Console.Clear();
-                    Console.WriteLine(" ---- password ----");
-                    string password = Console.ReadLine();
+                    string passCheck = @"^[a-zA-Z0-9_]{1,15}$";
+                    // phone pattern complete
+                    Match rxPass = Regex.Match("", passCheck);
+                    string password = "";
+                    while (!rxPass.Success && !quit.Equals("quit"))
+                    {
+                        // First Name
+                        Console.Clear();
+                        Console.WriteLine("\n ---- password ---- \"quit\" to return");
+                        password = Console.ReadLine();
+                        quit = password;
+                        rxPass = Regex.Match(password, passCheck);
+                    }
+                    if (quit.Equals("quit")) { continue; }
 
                     string name = "";
                     bool correctAuth = false;
-                    foreach (var Cx in customers){
+                    foreach (var Cx in customers) {
                         if (Cx.Email != null && Cx.Email.Equals(email))
                         {
                             if (Cx.UserPass.Equals(password))
@@ -90,31 +113,90 @@ namespace PizzaBox.Storing.Logic
                 //ask for user to create new acount by giving a email and password 
                 else if (choice == 2)
                 {
-                    // email - maps to username in the database
-                    Console.Clear();
-                    Console.WriteLine(" ---- new email ---- ");
-                    string email = Console.ReadLine();
+                    string quit = "";
+
+                    string emailChk = @"^[a-zA-Z0-9_]{1,15}[@][a-zA-Z0-9_]{1,15}[.][a-zA-Z]{2,3}$";
+                    Match mxEmail = Regex.Match("", emailChk);
+                    string email = "";
+                    while(!mxEmail.Success && !quit.Equals("quit"))
+                    {
+                        // Email
+                        Console.Clear();
+                        Console.WriteLine("\n  ---- new email - typical email format required ----\n\t\t\"quit\" to return");
+                        email = Console.ReadLine();
+                        quit = email;
+                        mxEmail = Regex.Match(email, emailChk);
+                    }
+                    if (quit.Equals("quit")) { break; }
 
                     // password
-                    Console.WriteLine("\n ---- create password ----");
-                    string password = Console.ReadLine();
+                    string passCheck = @"^[a-zA-Z0-9_]{1,15}$";
+                    // phone pattern complete
+                    Match rxPass = Regex.Match("", passCheck);
+                    string password = "";
+                    while (!rxPass.Success && !quit.Equals("quit"))
+                    {
+                        // First Name
+                        Console.Clear();
+                        Console.WriteLine("\n ---- create password please only 15 characters, numbers, and top row special characters only ----\n\t\t\"quit\" to return");
+                        password = Console.ReadLine();
+                        quit = password;
+                        rxPass = Regex.Match(password, passCheck);
+                    }
+                    if (quit.Equals("quit")) { break; }
 
-                    // First Name
-                    Console.WriteLine("\n ---- first name ----");
-                    string fname = Console.ReadLine();
 
-                    // Last Name
-                    Console.WriteLine("\n ---- last name ----");
-                    string lname = Console.ReadLine();
+                    string namePattern = @"^[a-zA-Z]{1,15}$";
+                    // phone pattern complete
+                    Match rxFname = Regex.Match("", namePattern);
+                    string fname = "";
+                    while (!rxFname.Success && !quit.Equals("quit"))
+                    {
+                        // First Name
+                        Console.Clear();
+                        Console.WriteLine("\n ---- first name up to 15 characters Only Letters ----\n\t\t\"quit\" to return");
+                        fname = Console.ReadLine();
+                        quit = fname;
+                        rxFname = Regex.Match(fname, namePattern);
+                    }
+                    if (quit.Equals("quit")) { break; }
 
-                    // Phone Number
-                    Console.WriteLine("\n ---- Phone ----");
-                    string phone = Console.ReadLine();
+                    // phone pattern complete
+                    Match rxLname = Regex.Match("", namePattern);
+                    string lname = "";
+                    while (!rxLname.Success && !quit.Equals("quit"))
+                    {
+                        // Last Name
+                        Console.Clear();
+                        Console.WriteLine("\n ---- last name up to 15 characters ---\n\t\t\"quit\" to return");
+                        lname = Console.ReadLine();
+                        quit = lname;
+                        rxLname = Regex.Match(lname, namePattern);
+                    }
+                    if (quit.Equals("quit")) { break; }
+
+                    // phone pattern complete
+                    string phonePattern = @"^[0-9]{3}[\-]?[0-9]{3}[\-]?[0-9]{4}$";
+                    Match rxPhone = Regex.Match("", phonePattern);
+                    string phone = "";
+                    while (!rxPhone.Success && !quit.Equals("quit"))
+                    {
+                        // Phone Number
+                        Console.Clear();
+                        Console.WriteLine("\n ---- Phone ----");
+                        phone = Console.ReadLine();
+                        rxPhone = Regex.Match(phone, phonePattern);
+                    }
+                    if (quit.Equals("quit")) { break; }
+
+
+
+                    ///////////////////////////////////////
 
                     bool correctAuth = false;
                     foreach (var Cx in customers)
                     {
-                        if (Cx.Email!=null && Cx.Email.Equals(email))
+                        if (Cx.Email != null && Cx.Email.Equals(email))
                             if (Cx.UserPass.Equals(password))
                                 correctAuth = true;
                     }
