@@ -141,7 +141,7 @@ namespace PizzaBox.Storing.Logic
                     {
                         // First Name
                         Console.Clear();
-                        Console.WriteLine("\n ---- create password please only 15 characters, numbers, and top row special characters only ----\n\t\t\"quit\" to return");
+                        Console.WriteLine("\n ---- create password please only 15 characters, numbers only ----\n\t\t\"quit\" to return");
                         password = Console.ReadLine();
                         quit = password;
                         rxPass = Regex.Match(password, passCheck);
