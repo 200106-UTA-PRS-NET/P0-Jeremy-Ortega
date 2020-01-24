@@ -206,6 +206,10 @@ namespace PizzaBox.Storing.Logic
                     CurOrd.confirmPizzaOrder(PresetPizza, username, storeName);
                     sizeOfPizza = 0;
                 }
+                else
+                {
+                    sizeOfPizza = 0;
+                }
             }
         }
     }

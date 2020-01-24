@@ -28,7 +28,7 @@ namespace PizzaBox.Storing.Logic
             {
                 PH.printStoreHeaderLoggedIn(username, storeName);
                 Console.WriteLine(" | %%% Price of pizza adding to order: ${0} %%%|", PizzaChoice.getPriceOfPizza());
-                Console.WriteLine(" |------------------------------");
+                Console.WriteLine(" |---------------------------------------------------------");
                 Console.WriteLine(" |1. : Confirm Pizza to order");
                 Console.WriteLine(" |2. : return to previous menu...");
                 Console.WriteLine(" |_________________________________________________________");
