@@ -130,7 +130,7 @@ namespace PizzaBox.Storing.Logic
                         quit = email;
                         mxEmail = Regex.Match(email, emailChk);
                     }
-                    if (quit.Equals("quit")) { choice = -1; break; }
+                    if (quit.Equals("quit")) { choice = -1; continue; }
 
                     // password
                     string passCheck = @"^[a-zA-Z0-9_]{1,15}$";
@@ -146,7 +146,7 @@ namespace PizzaBox.Storing.Logic
                         quit = password;
                         rxPass = Regex.Match(password, passCheck);
                     }
-                    if (quit.Equals("quit")) { choice = -1; break; }
+                    if (quit.Equals("quit")) { choice = -1; continue; }
 
 
                     string namePattern = @"^[a-zA-Z]{1,15}$";
@@ -162,7 +162,7 @@ namespace PizzaBox.Storing.Logic
                         quit = fname;
                         rxFname = Regex.Match(fname, namePattern);
                     }
-                    if (quit.Equals("quit")) { choice = -1; break; }
+                    if (quit.Equals("quit")) { choice = -1; continue; }
 
                     // phone pattern complete
                     Match rxLname = Regex.Match("", namePattern);
@@ -176,7 +176,7 @@ namespace PizzaBox.Storing.Logic
                         quit = lname;
                         rxLname = Regex.Match(lname, namePattern);
                     }
-                    if (quit.Equals("quit")) { choice = -1; break; }
+                    if (quit.Equals("quit")) { choice = -1; continue; }
 
                     // phone pattern complete
                     string phonePattern = @"^[0-9]{3}[\-]?[0-9]{3}[\-]?[0-9]{4}$";
@@ -187,9 +187,9 @@ namespace PizzaBox.Storing.Logic
                         // Phone Number
                         Console.Clear();
                         Console.WriteLine("\n ---- Phone 10 digits not starting with 0 ----");
-                        phone = Console.ReadLine();
+                        //Console.WriteLine(" ---- \"quit\" to return ----");
+                        phone = Console.ReadLine();                 
                         rxPhone = Regex.Match(phone, phonePattern);
-
                         /////////////// Fix Phone bug - remove string '-' from string
                         phone = Regex.Replace(phone, "[/-]", "");
                         if (phone.StartsWith("0"))
@@ -220,6 +220,7 @@ namespace PizzaBox.Storing.Logic
                     }
                     Console.Clear();
                     Console.WriteLine("Created your account! [{0}]", email);
+                    Thread.Sleep(800);
                     Random random = new Random();
                     Customer1 Cu = new Customer1()
                     {
