@@ -80,7 +80,7 @@ namespace PizzaBox.Storing.Logic
                                     Console.WriteLine(" |---------------------------------------------------------------------------");
                                     Console.WriteLine($" | Order: {Ord.OrderId} on Date {Ord.OrderDate}  Total Cost ${Ord.Price}");
                                 }
-                                Console.Write($" |     <${pie.Price}> :: {pie.Size}inch {pie.Crust} ");
+                                Console.Write($" |     ${pie.Price}       :: {pie.Size}inch {pie.Crust} ");
                                 char[] tops = BFC.convertIntToFlagArray(pie.Toppings, 5);
                                 if (tops[0] == '1')
                                 {
