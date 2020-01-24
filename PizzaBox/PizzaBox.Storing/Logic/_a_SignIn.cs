@@ -105,7 +105,7 @@ namespace PizzaBox.Storing.Logic
                     {
                         Console.Clear();
                         Console.WriteLine("No User found with that email and password.");
-                        Thread.Sleep(1200);
+                        Thread.Sleep(1000);
                         choice = -1;
                         continue;
                     }
@@ -186,7 +186,7 @@ namespace PizzaBox.Storing.Logic
                     {
                         // Phone Number
                         Console.Clear();
-                        Console.WriteLine("\n ---- Phone 9 digits not starting with 0 ----");
+                        Console.WriteLine("\n ---- Phone 10 digits not starting with 0 ----");
                         phone = Console.ReadLine();
                         rxPhone = Regex.Match(phone, phonePattern);
 
@@ -232,7 +232,6 @@ namespace PizzaBox.Storing.Logic
                     };
 
                     repo.CreateCustomer(Cu);
-                    Thread.Sleep(400);
                     choice = -1;
                 }
                 else if (choice == 0)

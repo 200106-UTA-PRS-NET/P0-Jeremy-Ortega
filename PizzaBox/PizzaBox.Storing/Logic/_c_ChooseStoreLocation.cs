@@ -106,6 +106,7 @@ namespace PizzaBox.Storing.Logic
                     }
                 }
                 Console.WriteLine(" |0. : Return to previous page.");
+                // Console.WriteLine(" | 9 : [Employee login]");
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
                 {
@@ -131,14 +132,24 @@ namespace PizzaBox.Storing.Logic
                     SPL.inStoreLogic(username, Loc.StoreName, repo, orderRepo, pizzaRepo, storeRepo);
 
                     // SPL.inStoreLogic(username, Loc.StoreName, locationChoice, CurOrd, LocationOrderHistory);
-                    Console.WriteLine("...In Progress");
-                    Thread.Sleep(1100);
                 }
+
+                /*
+                if (locationChoice == 9)
+                {
+                    Console.WriteLine("Please Provide the employee password...");
+                    string str = Console.ReadLine();
+                    if (str.Equals("cheesy"))
+                    {
+                        Employee = true;
+                    }
+                }
+                */
 
                 if (locationChoice == 0)
                 {
                     Console.WriteLine("returning to the previous page...");
-                    Thread.Sleep(700);
+                    Thread.Sleep(500);
                     break;
                 }
             }
