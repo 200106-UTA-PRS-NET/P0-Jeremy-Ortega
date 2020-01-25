@@ -35,12 +35,10 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" | 2. : Add another Pizza Already!");
                 //COL.printCxPrevOrdersAtCurrLoc(username, stores, locationChoice, LocationOrderHistory, CurOrd);
                 Console.WriteLine(" |_________________________________________________________");
-                if (!int.TryParse(Console.ReadLine(), out checkOutOrAddAnother)) // try to read int choice
-                {
-                    Console.WriteLine("Not an option");
-                    checkOutOrAddAnother = -1;
-                    continue;
-                }
+
+                checkOutOrAddAnother = IntCheck.IntChecker();
+                if (checkOutOrAddAnother == -1) { continue; }
+
                 // Call method to print Cx Orders
                 if (checkOutOrAddAnother == 1)
                 {

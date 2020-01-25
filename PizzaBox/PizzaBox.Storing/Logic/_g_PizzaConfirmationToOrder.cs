@@ -32,12 +32,10 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" |1. : Confirm Pizza to order");
                 Console.WriteLine(" |2. : return to previous menu...");
                 Console.WriteLine(" |_________________________________________________________");
-                if (!int.TryParse(Console.ReadLine(), out confirm))
-                {
-                    Console.WriteLine("Not an option");
-                    confirm = -1;
-                    continue;
-                }
+
+                confirm = IntCheck.IntChecker();
+                if (confirm == -1) { continue; }
+
                 if (confirm == 1)
                 {
                     return true;

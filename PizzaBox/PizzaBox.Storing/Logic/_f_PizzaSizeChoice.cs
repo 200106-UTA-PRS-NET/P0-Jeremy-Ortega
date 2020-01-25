@@ -66,14 +66,10 @@ namespace PizzaBox.Storing.Logic
                             Console.WriteLine(" | 2. deep dish");
                             Console.WriteLine(" | 3. cheese filled");
                             Console.WriteLine(" |___________________________________________________");
-                            int crustChoice;
-                            if (!int.TryParse(Console.ReadLine(), out crustChoice))
-                            {
-                                Console.WriteLine("Not an option");
-                                Thread.Sleep(1100);
-                                crustCheck = -1;
-                                continue;
-                            }
+                            
+                            int crustChoice = IntCheck.IntChecker();
+                            if (crustChoice == -1) { continue; }
+
                             if (crustChoice == 1)
                             {
                                 PresetPizza.chooseCrust(Pizza.Crust.thin);
@@ -97,7 +93,15 @@ namespace PizzaBox.Storing.Logic
                         }
                     }
                         // This is the toppings choice.
-                        List<string> toppings = new List<string>();
+                    List<string> toppings = new List<string>();
+                    List<string> fullTops = new List<string>();
+                    
+                    fullTops.Add("sauce");
+                    fullTops.Add("cheese");
+                    fullTops.Add("pepperoni");
+                    fullTops.Add("sausage");
+                    fullTops.Add("pineapple");
+
                     for (int i = 0; i < 5; i++)
                     {
                         PLH.printStoreHeaderLoggedIn(username, storeName);
@@ -117,69 +121,50 @@ namespace PizzaBox.Storing.Logic
                         if (toppings.Count > 0) {
                             Console.WriteLine();
                         }
-                        Console.WriteLine(" | 1. sauce");
-                        Console.WriteLine(" | 2. cheese");
-                        Console.WriteLine(" | 3. pepperoni");
-                        Console.WriteLine(" | 4. sausage");
-                        Console.WriteLine(" | 5. pineapple");
+                        int count = 0;
+                        foreach (var fTop in fullTops) {
+                            Console.WriteLine($" | {count+1}. {fTop}");
+                            count++;
+                        }
+
                         Console.WriteLine(" | 0. [COMPLETED TOPPING CHOICE]...");
                         Console.WriteLine(" |______________________________________________________");
-                        int toppingChoice;
-                        if (!int.TryParse(Console.ReadLine(), out toppingChoice))
-                        {
-                            Console.WriteLine("Not an option");
+                       
+                        int toppingChoice = IntCheck.IntChecker();
+                        if (toppingChoice == -1 || toppingChoice > fullTops.Count) {
                             i--;
-                            continue;
+                            continue; 
                         }
-                        if (toppingChoice == 1)
-                        {
-                            toppings.Add("sauce");
-                        }
-                        else if (toppingChoice == 2)
-                        {
-                            toppings.Add("cheese");
-                        }
-                        else if (toppingChoice == 3)
-                        {
-                            toppings.Add("pepperoni");
-                        }
-                        else if (toppingChoice == 4)
-                        {
-                            toppings.Add("sausage");
-                        }
-                        else if (toppingChoice == 5)
-                        {
-                            toppings.Add("pineapple");
-                        }
-                        else if (toppingChoice == 0)
+                        if (toppingChoice == 0)
                         {
                             break;
                         }
-                        else
-                        {
-                            Console.WriteLine(" Please submit an available choice...");
-                            i--;
-                        }
+
+                        // remove from remaining toppings for customer 
+                        string temp = fullTops[toppingChoice - 1];
+                        fullTops.RemoveAt(toppingChoice - 1);
+                        toppings.Add(temp);
+
                     }
-                    foreach (var tops in toppings)
+                    foreach(var tops in toppings)
                     {
                         if (tops.Equals("sauce"))
                         {
                             PresetPizza.addToppings(Pizza.Toppings.sauce);
                         }
-                        if (tops.Equals("cheese"))
+                        else if (tops.Equals("cheese"))
                         {
                             PresetPizza.addToppings(Pizza.Toppings.cheese);
                         }
-                        if (tops.Equals("pepperoni"))
+                        else if (tops.Equals("pepperoni"))
                         {
                             PresetPizza.addToppings(Pizza.Toppings.pepperoni);
                         }
-                        if (tops.Equals("sausage"))
+                        else if (tops.Equals("sausage"))
                         {
                             PresetPizza.addToppings(Pizza.Toppings.sausage);
                         }
-                        if (tops.Equals("pineapple"))
+                        else if (tops.Equals("pineapple"))
                         {
                             PresetPizza.addToppings(Pizza.Toppings.pineapple);
                         }

@@ -31,19 +31,8 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="CurOrd"></param>
        // public void pizzaMakerChoice(string username, StoreRepository stores, int locationChoice, CurrentOrder CurOrd, OrderHistory LocationOrderHistory)
-        public void pizzaMakerChoice(string username, string storeName, CurrentOrder CurOrd, 
-
-            Abstractions.IRepositoryCustomer<Customer1> repo,
-            Abstractions.IRepositoryOrders<Order1> orderRepo,
-            Abstractions.IRepositoryPizza<Pizza1> pizzaRepo,
-            Abstractions.IRepositoryStore<Store1> storeRepo)
+        public void pizzaMakerChoice(string username, string storeName, CurrentOrder CurOrd)
         {
-
-            var customer = repo.ReadInCustomer();
-            var order = orderRepo.ReadInOrder();
-            var pizza = pizzaRepo.ReadInPizza();
-            var store = storeRepo.ReadInStore();
-
             int presetPizzaOptional = -1;
             while (presetPizzaOptional != 0)
             {
@@ -56,12 +45,9 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" | 0. : return to previous page...");
                 Console.WriteLine(" |_________________________________________________________");
 
-                if (!int.TryParse(Console.ReadLine(), out presetPizzaOptional)) // try to read int choice
-                {
-                    Console.WriteLine("Not an option");
-                    presetPizzaOptional = -1;
-                    continue;
-                }
+                presetPizzaOptional = IntCheck.IntChecker();
+                if (presetPizzaOptional == -1) { continue; }
+
                 if (presetPizzaOptional == 4)
                 {
                     PPS.printPizzaSizeChoice(username, storeName, "Custom Pizza");

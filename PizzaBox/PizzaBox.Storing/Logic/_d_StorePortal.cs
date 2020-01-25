@@ -49,23 +49,17 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" |---------------------------------------------------------");
                 Console.WriteLine(" | 1. : Order a Pizza.");
                 Console.WriteLine(" | 2. : Preview Your Current Order.");
-                // if(){
                 Console.WriteLine(" | 3. : [ADMIN] Preview All Orders at this Location.");
-                // }
                 Console.WriteLine(" | 0. : Return to Restaurant choice.");
                 Console.WriteLine(" |_________________________________________________________");
 
-                if (!int.TryParse(Console.ReadLine(), out inStoreChoice)) // try to read int choice
-                {
-                    Console.WriteLine("Not an option");
-                    inStoreChoice = -1;
-                    continue;
-                }
+                inStoreChoice = IntCheck.IntChecker();
+                if (inStoreChoice == -1) { continue; }
 
                 // Pizza Size
                 if (inStoreChoice == 1)
                 {
-                   PMC.pizzaMakerChoice(username, storeName, curOrder, repo, orderRepo, pizzaRepo, storeRepo);
+                    PMC.pizzaMakerChoice(username, storeName, curOrder);
                 }
    
                 if (inStoreChoice == 2)
@@ -173,33 +167,6 @@ namespace PizzaBox.Storing.Logic
                 if (inStoreChoice == 3)
                 {
                     AllRestaurantOrders(orderRepo, storeRepo, username, storeName);
-                    //Console.Clear();
-                    //Console.WriteLine("Please Enter The Store Employee Passcode.");
-                    //string passcode = Console.ReadLine();
-                    //if (passcode != "cheesy")
-                    //{
-                    //    Console.WriteLine("Incorrect Passcode. Press any key to continue.");
-                    //    Console.ReadLine();
-                    //}
-                    //else
-                    //{
-                    //    // StoresOrdHist.orders = stores.currentStores[locationChoice - 1].userHistoryFromThisStore(username);
-                    //    PLIH.printStoreHeaderLoggedIn(username, storeName);
-                    //    Console.WriteLine(" | :: All Restaurant Orders::");
-                    //    Console.WriteLine(" |---------------------------------------------------------");
-                    //    Console.WriteLine(" | Order ID  |  Cx ID  |  Price  |  Date  |");
-                    //    Console.WriteLine(" |---------------------------------------------------------");
-                    //    var stor = store.FirstOrDefault(S => S.StoreName.Equals(storeName));
-                    //    foreach (var o in order)
-                    //    {
-                    //        if (o.StoreId == stor.Id)
-                    //        {
-                    //            Console.WriteLine($" | {o.OrderId} {o.CustId} {o.Price}\t{o.OrderDate}");
-                    //        }
-                    //    }
-                    //    Console.WriteLine(" |_________________________________________________________");
-                    //    Console.ReadLine();
-                    //}
                 }
 
                 if (inStoreChoice == 0)

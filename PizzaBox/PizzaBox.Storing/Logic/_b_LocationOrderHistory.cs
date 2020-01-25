@@ -44,13 +44,10 @@ namespace PizzaBox.Storing.Logic
                 Console.WriteLine(" |2. My complete order history");
                 Console.WriteLine(" |3. sign out");
                 Console.WriteLine(" |________________________________________________________________");
-                if (!int.TryParse(Console.ReadLine(), out signedInChoice))
-                {
-                    Console.WriteLine("Not an int");
-                    signedInChoice = -1;
-                    continue;
-                }
-                
+
+                signedInChoice = IntCheck.IntChecker();
+                if (signedInChoice == -1) { continue; }
+
                 //This choice signifies selecting the pizza parlor you wish to engage with 
                 if (signedInChoice == 1)
                 {
@@ -98,7 +95,7 @@ namespace PizzaBox.Storing.Logic
                                 {
                                     Console.Write(" <sausage> ");
                                 }
-                                if(tops[4] == '4')
+                                if(tops[4] == '1')
                                 {
                                     Console.Write(" <pineapple> ");
                                 }

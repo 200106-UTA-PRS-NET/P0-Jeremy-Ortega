@@ -26,8 +26,6 @@ namespace PizzaBox.Storing.Logic
             Console.Clear();
             PH.printStoreHeaderLoggedIn(username, storeName);
 
-            // write each order Location
-
             // At each order location write all the pizza sizes, crust and price's in each order
             Console.WriteLine(" | user: <{0}> order totalled: <${1}> |", curOrd.userName, curOrd.currOrderTotal);
             Console.WriteLine(" |----------------------------------------");
@@ -53,12 +51,9 @@ namespace PizzaBox.Storing.Logic
             int res = -1;
             while (res < 1 || res > 2)
             {
-                if (!int.TryParse(Console.ReadLine(), out res)) // try to read int choice
-                {
-                    Console.WriteLine("Not an option");
-                    Thread.Sleep(1000);
-                    res = -1;
-                }
+                res = IntCheck.IntChecker();
+                if (res == -1) { continue; }
+
             }
             return res;
         }

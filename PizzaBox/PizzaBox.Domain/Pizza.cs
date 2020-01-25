@@ -76,6 +76,11 @@ namespace PizzaBox.Domain
             }
         }
 
+        //public string [] getListOfPossibleToppings()
+        //{
+        //    string [] str = new string[] {"sauce","cheese","pepperoni","sausage","pineapple"};
+        //}
+
         /// <summary>
         /// return the toppings in a string list
         /// </summary>

@@ -23,7 +23,6 @@ namespace PizzaBox.Storing.Logic
         /// </summary>
         /// <param name="username"></param>
         /// <param name="stores"></param>
-        // public void choosePizzaStoreLocation(string username, StoreRepository stores, OrderHistory OrderHistory)
         public void choosePizzaStoreLocation(string username,
             Abstractions.IRepositoryCustomer<Customer1> repo,
             Abstractions.IRepositoryOrders<Order1> orderRepo,
@@ -34,7 +33,6 @@ namespace PizzaBox.Storing.Logic
             var order = orderRepo.ReadInOrder();
             var pizza = pizzaRepo.ReadInPizza();
             var store = storeRepo.ReadInStore();
-
 
             int locationChoice = -1;
             while (locationChoice != 0)
@@ -51,11 +49,10 @@ namespace PizzaBox.Storing.Logic
                 int storeCount = 0;
                 foreach (var s in store)
                 {
-                    //var cx = customer.OrderByDescending(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
-                    //////
+                    // var cx = customer.OrderByDescending(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
                     bool visitedStore = false;
                     var Cus = customer.FirstOrDefault(Cx => Cx.Fname.Equals(username));
-                    ///
+
                     DateTime dt = DateTime.Now;
                     double time = 25;
                     double date2 = 25;
@@ -71,15 +68,10 @@ namespace PizzaBox.Storing.Logic
                             {
                                 time = date2;
                             }
-                            //Console.WriteLine($"{Cus.Fname} : {s.StoreName} : {Ord.OrderDate} : {ts2}");
                         }
-                        //Console.WriteLine($"{Cus.Fname} : {s.StoreName} : {Ord.OrderDate} : {ts2}");
                     }
                     if (visitedStore)
                     {
-                        //Console.WriteLine("visited!");
-                        //double time = ts.TotalMinutes / 60;
-
                         if (time >= 24)
                         {
                             //Console.WriteLine($"Yes visited and time {time}hrs ago");
@@ -106,7 +98,6 @@ namespace PizzaBox.Storing.Logic
                     }
                 }
                 Console.WriteLine(" |0. : Return to previous page.");
-                // Console.WriteLine(" | 9 : [Employee login]");
                 Console.WriteLine(" |_________________________________________________________");
                 if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
                 {
