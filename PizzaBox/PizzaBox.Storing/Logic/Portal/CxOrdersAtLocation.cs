@@ -5,14 +5,14 @@ using System.Text;
 using PizzaBox.Storing.Repositories;
 using System.Threading;
 
-namespace PizzaBox.Storing.Logic
+namespace PizzaBox.Storing.Logic.Portal
 {
     public class CxOrdersAtLocation
     {
-        ZZ_PrintLoggedInHeader PH;
+       //ZZ_PrintLoggedInHeader PH;
         public CxOrdersAtLocation()
         {
-            PH = new ZZ_PrintLoggedInHeader();
+            //PH = new ZZ_PrintLoggedInHeader();
         }
         /// <summary>
         /// Call this method to print all Cx Pizza's in their current order
@@ -21,10 +21,10 @@ namespace PizzaBox.Storing.Logic
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="currentOrder"></param>
-        public int printCxPrevOrdersAtCurrLoc(string username, string storeName, CurrentOrder curOrd)
+        public static int printCxPrevOrdersAtCurrLoc(string username, string storeName, CurrentOrder curOrd)
         {
             Console.Clear();
-            PH.printStoreHeaderLoggedIn(username, storeName);
+            ZZ_PrintLoggedInHeader.printStoreHeaderLoggedIn(username, storeName);
 
             // At each order location write all the pizza sizes, crust and price's in each order
             Console.WriteLine(" | user: <{0}> order totalled: <${1}> |", curOrd.userName, curOrd.currOrderTotal);

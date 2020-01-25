@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace PizzaBox.Storing.Logic.LoginChecks
 {
-    class NewPhoneCheck
+    class PhoneCheck
     {
         public static string NewPhoneChecker()
         {

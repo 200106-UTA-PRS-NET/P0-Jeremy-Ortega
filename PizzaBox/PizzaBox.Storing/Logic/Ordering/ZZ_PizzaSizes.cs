@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using PizzaBox.Storing.Logic.Portal;
 
-namespace PizzaBox.Storing.Logic
+namespace PizzaBox.Storing.Logic.Ordering
 {
     public class ZZ_PizzaSizes
     {
-        ZZ_PrintLoggedInHeader PH;
         public ZZ_PizzaSizes()
         {
-            PH = new ZZ_PrintLoggedInHeader();
         }
         /// <summary>
         /// Print the size options for a pizza
@@ -19,9 +18,9 @@ namespace PizzaBox.Storing.Logic
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
         /// <param name="PizzaType"></param>
-        public void printPizzaSizeChoice(string username,string storeName, string PizzaType)
+        public static void printPizzaSizeChoice(string username,string storeName, string PizzaType)
         {
-            PH.printStoreHeaderLoggedIn(username, storeName);
+            ZZ_PrintLoggedInHeader.printStoreHeaderLoggedIn(username, storeName);
             Console.WriteLine(" |  :: {0} ::  |", PizzaType);
             Console.WriteLine(" |---------------------------------------------------------");
             Console.WriteLine(" | 1. : 12\"");

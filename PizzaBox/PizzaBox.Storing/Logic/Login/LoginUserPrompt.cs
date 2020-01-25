@@ -14,10 +14,10 @@ namespace PizzaBox.Storing.Logic.LoginChecks
 
             var customers = repo.ReadInCustomer();
 
-            string email = NewEmailCheck.NewEmailChecker();
+            string email = EmailCheck.NewEmailChecker();
             if (email.Equals("quit")) { return "@"; }
 
-            string password = NewPassCheck.NewPassChecker();
+            string password = PassCheck.NewPassChecker();
             if (password.Equals("quit")) { return "@"; }
             string name = "";
             bool correctAuth = false;

@@ -9,12 +9,8 @@ namespace PizzaBox.Storing.Logic
 {
     public class _f_PizzaSizeChoice
     {
-        _g_PizzaConfirmationToOrder PCTO;
-        ZZ_PrintLoggedInHeader PLH;
         public _f_PizzaSizeChoice()
         {
-            PCTO = new _g_PizzaConfirmationToOrder();
-            PLH = new ZZ_PrintLoggedInHeader();
         }
         /// <summary>
         /// Add a preset Pizza of specified type
@@ -24,7 +20,7 @@ namespace PizzaBox.Storing.Logic
         /// <param name="locationChoice"></param>
         /// <param name="PresetPizza"></param>
         /// <param name="CurOrd"></param>
-        public void presetPizzaSizeChoice(string username, string storeName, Pizza PresetPizza, CurrentOrder CurOrd, bool custom)
+        public static void presetPizzaSizeChoice(string username, string storeName, Pizza PresetPizza, CurrentOrder CurOrd, bool custom)
         {
             // Get price of pizza
             int sizeOfPizza = -1;
@@ -56,7 +52,7 @@ namespace PizzaBox.Storing.Logic
                 if (custom)
                 {
                     // This is the crust option
-                    PLH.printStoreHeaderLoggedIn(username, storeName);
+                    ZZ_PrintLoggedInHeader.printStoreHeaderLoggedIn(username, storeName);
                     {
                         int crustCheck = -1;
                         while (crustCheck <1 || crustCheck >3) {
@@ -104,7 +100,7 @@ namespace PizzaBox.Storing.Logic
 
                     for (int i = 0; i < 5; i++)
                     {
-                        PLH.printStoreHeaderLoggedIn(username, storeName);
+                        ZZ_PrintLoggedInHeader.printStoreHeaderLoggedIn(username, storeName);
                         if (toppings.Count == 0)
                         {
                             Console.WriteLine(" | You may choose up to five toppings.. Hit enter after each submission.");
@@ -172,7 +168,7 @@ namespace PizzaBox.Storing.Logic
                 }
 
                 // if user chooses to confirm then add order.
-                if (PCTO.PizzaConfirmToOrder(username, storeName, PresetPizza))
+                if (_g_PizzaConfirmationToOrder.PizzaConfirmToOrder(username, storeName, PresetPizza))
                 {
                     double check = 0;
                     foreach (var priceCheck in CurOrd.pizzasInOrder)

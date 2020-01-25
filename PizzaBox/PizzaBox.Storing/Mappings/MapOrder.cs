@@ -7,6 +7,7 @@ namespace PizzaBox.Storing.Mappings
 {
     class MapOrder
     {
+
         public static Order1 Map(Domain.Models.CxOrder Cx)
         {
             return new Order1()
@@ -18,6 +19,7 @@ namespace PizzaBox.Storing.Mappings
                 OrderDate = Cx.OrderDate
             };
         }
+
         public static Domain.Models.CxOrder Map(Order1 Cx)
         {
             return new Domain.Models.CxOrder()

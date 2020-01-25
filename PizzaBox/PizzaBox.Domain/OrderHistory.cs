@@ -6,6 +6,9 @@ namespace PizzaBox.Domain
 
     public class OrderHistory
     {
+
+        //public List<CurrentOrder> CxOrderHistory { get; set; }
+
         public List<CurrentOrder> orders;
 
         public OrderHistory()

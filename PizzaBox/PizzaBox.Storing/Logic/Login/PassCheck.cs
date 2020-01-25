@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace PizzaBox.Storing.Logic.LoginChecks
 {
-    class NewPassCheck
+    class PassCheck
     {
         public static string NewPassChecker()
         {
@@ -19,7 +19,7 @@ namespace PizzaBox.Storing.Logic.LoginChecks
             {
                 // First Name
                 Console.Clear();
-                Console.WriteLine("\n ---- create password please only 15 characters, numbers only ----");
+                Console.WriteLine("\n ---- password ----");
                 RegexAndLoginExpressions.quitPrompt();
                 password = Console.ReadLine();
                 if (password.Equals("quit"))

@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using PizzaBox.Domain;
-using System.Text;
-using System.Threading;
 using PizzaBox.Storing.TestModels;
-using System.Text.RegularExpressions;
 
-
-// TODO 70;
-
-
-namespace PizzaBox.Storing.Logic
+namespace PizzaBox.Storing.Logic.Portal
 {
     public class _a_SignIn
     {
-        _b_LocationOrderHistory LOH;
         public _a_SignIn()
         {
-            LOH = new _b_LocationOrderHistory();
         }
 
         /// <summary>
@@ -31,8 +20,8 @@ namespace PizzaBox.Storing.Logic
             Abstractions.IRepositoryStore<Store1> storeRepo)
         {   
 
-            int choice = -1;
-            while (!(choice >= 1 && choice <= 2))
+            int choice = 1;
+            while (choice != 0)
             {
                 Console.Clear();
                 Console.WriteLine(" __________________________________");
@@ -47,23 +36,17 @@ namespace PizzaBox.Storing.Logic
                 //ask for user name and password of a previously created account 
                 if (choice == 1)
                 {
-                    string name = LoginChecks.LoginUserPrompt.LoginUserPrompter(repo);
-                    if (name.Equals("@")) { continue; }
-                    LOH.ChooseVewOrdersOrStorePortal(name, repo, orderRepo, pizzaRepo, storeRepo);
-                    choice = 0;
+                    string name = Login.LoginUserPrompt.LoginUserPrompter(repo);
+                    if (!name.Equals("@"))
+                    {
+                        _b_LocationOrderHistory.ChooseVewOrdersOrStorePortal(name, repo, orderRepo, pizzaRepo, storeRepo);
+                    }
                 }
 
                 //ask for user to create new acount by giving a email and password 
                 else if (choice == 2)
                 {
-                    LoginChecks.CreateNewUser.CreateNewUserPrompt(repo);
-                    choice = -1;
-                }
-
-
-                else if (choice == 0)
-                {
-                    break;
+                    Login.CreateNewUser.CreateNewUserPrompt(repo);
                 }
             }
 

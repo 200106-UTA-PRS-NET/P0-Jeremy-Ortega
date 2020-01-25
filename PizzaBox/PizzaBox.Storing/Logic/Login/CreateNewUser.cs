@@ -2,7 +2,7 @@
 using System;
 using System.Threading;
 
-namespace PizzaBox.Storing.Logic.LoginChecks
+namespace PizzaBox.Storing.Logic.Login
 
 {
     class CreateNewUser
@@ -10,19 +10,19 @@ namespace PizzaBox.Storing.Logic.LoginChecks
         public static bool CreateNewUserPrompt(Abstractions.IRepositoryCustomer<Customer1> repo)
         {
             // Check for valid email
-            string email = NewEmailCheck.NewEmailChecker();
+            string email = EmailCheck.NewEmailChecker();
             if (RegexAndLoginExpressions.safeWord(email)) { return false; }
             // Check for valid password
-            string password = NewPassCheck.NewPassChecker();
+            string password = PassCheck.NewPassChecker();
             if (RegexAndLoginExpressions.safeWord(password)) { return false; }
             // Check for valid first name
-            string fname = NewFirstNameCheck.NewFirstNameChecker();
+            string fname = FirstNameCheck.NewFirstNameChecker();
             if (RegexAndLoginExpressions.safeWord(fname)) { return false; }
             // Check for valid last name
-            string lname = NewLastNameCheck.NewLastNameChecker();
+            string lname = LastNameCheck.NewLastNameChecker();
             if (RegexAndLoginExpressions.safeWord(lname)) { return false; }
             // Check for valid phone
-            string phone = NewPhoneCheck.NewPhoneChecker();
+            string phone = PhoneCheck.NewPhoneChecker();
             if (RegexAndLoginExpressions.safeWord(phone)) { return false; }
 
             // Check if customer already exists

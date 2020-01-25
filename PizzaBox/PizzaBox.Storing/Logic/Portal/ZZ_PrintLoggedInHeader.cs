@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaBox.Storing.Logic
+namespace PizzaBox.Storing.Logic.Portal
 {
     public class ZZ_PrintLoggedInHeader
     {
@@ -14,12 +14,9 @@ namespace PizzaBox.Storing.Logic
         /// <param name="username"></param>
         /// <param name="stores"></param>
         /// <param name="locationChoice"></param>
-        public void printStoreHeaderLoggedIn(string username, string storeName)
+        public static void printStoreHeaderLoggedIn(string username, string storeName)
         {
-            Console.Clear();
-            Console.WriteLine(" __________________________________________________________");
-            Console.WriteLine(" | Hello:\t[" + username + "]");
-            Console.WriteLine(" |---------------------------------------------------------");
+            HeaderPortal.printHeaderPortal(username);
             Console.WriteLine($" | {storeName} |");
             Console.WriteLine(" |---------------------------------------------------------");
         }

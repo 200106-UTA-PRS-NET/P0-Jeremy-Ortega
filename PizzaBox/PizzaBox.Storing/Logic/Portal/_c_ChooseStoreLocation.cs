@@ -6,16 +6,13 @@ using System.Threading;
 using PizzaBox.Storing.TestModels;
 using System.Linq;
 
-namespace PizzaBox.Storing.Logic
+namespace PizzaBox.Storing.Logic.Portal
 {
     public class _c_ChooseStoreLocation
     {
 
-        _d_StorePortal SPL;
-
         public _c_ChooseStoreLocation()
         {
-            SPL = new _d_StorePortal();
         }
 
         /// <summary>
@@ -23,7 +20,7 @@ namespace PizzaBox.Storing.Logic
         /// </summary>
         /// <param name="username"></param>
         /// <param name="stores"></param>
-        public void choosePizzaStoreLocation(string username,
+        public static void choosePizzaStoreLocation(string username,
             Abstractions.IRepositoryCustomer<Customer1> repo,
             Abstractions.IRepositoryOrders<Order1> orderRepo,
             Abstractions.IRepositoryPizza<Pizza1> pizzaRepo,
@@ -49,19 +46,19 @@ namespace PizzaBox.Storing.Logic
                 int storeCount = 0;
                 foreach (var s in store)
                 {
+
+                    //DateTimeLogic.MostRecentOrder.getMostRecentOrder(store, customer, order, username);
                     // var cx = customer.OrderByDescending(Cx => Cx.Fname != null && Cx.Fname.Equals(username));
-                    bool visitedStore = false;
                     var Cus = customer.FirstOrDefault(Cx => Cx.Fname.Equals(username));
 
                     DateTime dt = DateTime.Now;
                     double time = 25;
                     double date2 = 25;
-                    //DateTime date; // just chckng
+                    // For each order go through and check if store id and customer id match
                     foreach (var Ord in order)
                     {
                         if (Cus.Id == Ord.CustId && Ord.StoreId == s.Id)
                         {
-                            visitedStore = true;
                             TimeSpan ts2 = (TimeSpan)(dt - Ord.OrderDate);
                             date2 = ts2.TotalMinutes / 60;
                             if (date2 < time)
@@ -70,72 +67,38 @@ namespace PizzaBox.Storing.Logic
                             }
                         }
                     }
-                    if (visitedStore)
+
+                    if (time >= 24)
                     {
-                        if (time >= 24)
-                        {
-                            //Console.WriteLine($"Yes visited and time {time}hrs ago");
-                            storeCount++;
-                            Console.WriteLine($" |{storeCount}. :  {s.StoreName}");
-                            Console.WriteLine($" |        {s.StoreLocation}");
-                            Console.WriteLine(" |");
-                            LocChoice.Add(storeCount, s.Id);
-                        }
-                        else
-                        {
-                            Console.WriteLine($" | Plese wait 24 hours before ordering from \"{s.StoreName}\" again.");
-                            Console.WriteLine($" | \t - You have {Math.Round((24 - time), 2)} hours remaining.");
-                            Console.WriteLine(" |");
-                        }
-                    }
-                    else
-                    {
+                        //Console.WriteLine($"Yes visited and time {time}hrs ago");
                         storeCount++;
                         Console.WriteLine($" |{storeCount}. :  {s.StoreName}");
                         Console.WriteLine($" |        {s.StoreLocation}");
                         Console.WriteLine(" |");
                         LocChoice.Add(storeCount, s.Id);
                     }
+                    else
+                    {
+                        Console.WriteLine($" | Plese wait 24 hours before ordering from \"{s.StoreName}\" again.");
+                        Console.WriteLine($" | \t - You have {Math.Round((24 - time), 2)} hours remaining.");
+                        Console.WriteLine(" |");
+                    }
+
                 }
                 Console.WriteLine(" |0. : Return to previous page.");
                 Console.WriteLine(" |_________________________________________________________");
-                if (!int.TryParse(Console.ReadLine(), out locationChoice)) // try to read int choice
-                {
-                    Console.WriteLine("Not an int");
-                    locationChoice = -1;
-                    continue;
-                }
+
+                locationChoice = IntCheck.IntChecker();
+                if (locationChoice == -1) { continue; }
 
                 // choose location and bring up data about that location
                 if (locationChoice > 0 && locationChoice <= storeCount)
                 {
-                    // This Object pulls from persisted data from a database on this store's location
-                    // pertaining to this Cx
-                    // This will need to be picked up from the database.
-                    /// OrderHistory orderHistoryOfCurrentLocation = null;
-                    // Cx Customers current order selections.  Basically each pizza is a new "order" however
-                    // It doesn't get it's persistance until checkout where The entire order gets the same order
-                    // ID to resemble a full order consisting of one or many pizzas.
-
                     var Loc = store.FirstOrDefault(S => S.Id == LocChoice[locationChoice]);
 
                     // Call Main logic for In Store.
-                    SPL.inStoreLogic(username, Loc.StoreName, repo, orderRepo, pizzaRepo, storeRepo);
-
-                    // SPL.inStoreLogic(username, Loc.StoreName, locationChoice, CurOrd, LocationOrderHistory);
+                    _d_StorePortal.inStoreLogic(username, Loc.StoreName, repo, orderRepo, pizzaRepo, storeRepo);
                 }
-
-                /*
-                if (locationChoice == 9)
-                {
-                    Console.WriteLine("Please Provide the employee password...");
-                    string str = Console.ReadLine();
-                    if (str.Equals("cheesy"))
-                    {
-                        Employee = true;
-                    }
-                }
-                */
 
                 if (locationChoice == 0)
                 {

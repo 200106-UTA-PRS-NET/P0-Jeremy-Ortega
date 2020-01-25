@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace PizzaBox.Storing.Logic.LoginChecks
 {
-    class NewLastNameCheck
+    class LastNameCheck
     {
         public static string NewLastNameChecker()
         {
@@ -16,7 +16,7 @@ namespace PizzaBox.Storing.Logic.LoginChecks
             {
                 // Last Name
                 Console.Clear();
-                Console.WriteLine("\n ---- last name up to 15 characters ----");
+                Console.WriteLine("\n ---- last name ----");
                 RegexAndLoginExpressions.quitPrompt();
                 lname = Console.ReadLine();
                 if (lname.Equals("quit"))

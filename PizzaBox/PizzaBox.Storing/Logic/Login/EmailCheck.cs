@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace PizzaBox.Storing.Logic.LoginChecks
 
 {
-    class NewEmailCheck
+    class EmailCheck
     {
         public static string NewEmailChecker()
         {
@@ -17,7 +17,7 @@ namespace PizzaBox.Storing.Logic.LoginChecks
             {
                 // Email
                 Console.Clear();
-                Console.WriteLine("\n  ---- new email ----");
+                Console.WriteLine("\n  ---- email ----");
                 RegexAndLoginExpressions.quitPrompt();
                 email = Console.ReadLine();
                 if (email.Equals("quit"))
